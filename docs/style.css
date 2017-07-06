@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-height: 1000px;
+}
+div #app {
+  background-color: black;
+  max-height: 500px;
+}
+
+h1 {
+  color: blue;
+  font-family: verdana;
+  font-weight: 400;
+}

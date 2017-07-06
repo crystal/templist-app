@@ -1,0 +1,17 @@
+extends: airbnb
+parser: babel-eslint
+rules:
+  comma-dangle:
+    - error
+    - never
+  react/forbid-prop-types:
+    - off
+  react/prefer-stateless-function:
+    - off
+  prefer-arrow-callback:
+    - off
+env:
+  browser: true
+  commonjs: true
+  node: true
+  
