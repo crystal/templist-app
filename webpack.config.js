@@ -35,8 +35,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       // { from: 'images', to: 'images' },
-      { from: 'index.html' },
-      { from: 'style.css' }
+      { from: 'index.html' }
     ]),
     // this plug reloads the browser with every code change
     new webpack.HotModuleReplacementPlugin()
@@ -55,6 +54,22 @@ module.exports = {
             'stage-0'
           ]
         }
+      },
+      {
+        test: /\.sass$/,
+        loader: 'style-loader'
+      },
+      {
+        test: /\.sass$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]__[hash:base64:5]'
+        }
+      },
+      {
+        test: /\.sass$/,
+        loader: 'sass-loader'
       }
     ]
   },
