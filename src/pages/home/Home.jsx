@@ -7,8 +7,10 @@ class HomePage extends React.Component {
     return (
       <div className={styles.home}>
         <section>
-          <h1>Home</h1>
-          <p>This is some text.</p>
+          <div className={styles.home}>
+            <h1>Home</h1>
+            <p>This is some text.</p>
+          </div>
         </section>
       </div>
     );

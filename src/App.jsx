@@ -11,6 +11,7 @@ import MainTemplate from './templates/main/Main';
 import AboutPage from './pages/about/About';
 import HomePage from './pages/home/Home';
 import TemplatesPage from './pages/templates/Templates';
+import LoginPage from './components/login/Login'
 
 import './App.sass';
 
@@ -35,6 +36,7 @@ render(
       <IndexRoute component={HomePage} />
       <Route path="about" component={AboutPage} />
       <Route path="templates" component={TemplatesPage} />
+      <Route path="login" component={LoginPage} />
     </Route>
   </Router>,
   document.getElementById('app')

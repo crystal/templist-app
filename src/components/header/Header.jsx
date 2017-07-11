@@ -9,7 +9,9 @@ class Header extends React.Component {
     return (
       <div className={styles.header}>
         <section>
-          <h1>Templist</h1>
+          <div className={styles.headerLogo}>
+            <h1>Templist</h1>
+          </div>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -19,6 +21,9 @@ class Header extends React.Component {
             </li>
             <li>
               <Link to="templates">Templates</Link>
+            </li>
+            <li>
+              <Link to="login">Login</Link>
             </li>
           </ul>
         </section>

@@ -7,8 +7,10 @@ class AboutPage extends React.Component {
     return (
       <div className={styles.about}>
         <section>
-          <h1>About</h1>
-          <p>This is some text.</p>
+          <div className={styles.about}>
+            <h1>About</h1>
+            <p>This is some text.</p>
+          </div>
         </section>
       </div>
     );
