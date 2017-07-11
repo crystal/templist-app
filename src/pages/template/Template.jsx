@@ -110,6 +110,19 @@ class TemplatePage extends Component {
       editMode
     });
   }
+  handleDelete(index) {
+    // use splice to alter the array of items and return it
+    //  w/o the deleted item items.splice(X, 1)
+    const items = this.state.items;
+    items.splice(index, 1);
+    this.setState({ items });
+  }
+
+  handleSave() {
+    console.log(this.state.items);
+
+  }
+
   handleTitleInput({ target: { value } }) {
     this.setState({
       title: value
@@ -140,6 +153,11 @@ class TemplatePage extends Component {
                 <button className={styles.editButton} onClick={() => this.toggleEditMode(false)}>
                   cancel
                 </button>
+                {/* if logged in and in edit mode, then show save button */}
+                <button
+                  className={styles.saveButton}
+                  onClick={() => this.handleSave()}
+                >save</button>
                 <button className={styles.editButton} onClick={() => this.handleExport()}>
                   {this.state.isSubmitting ? 'loading...' : 'export'}
                 </button>
@@ -169,7 +187,10 @@ class TemplatePage extends Component {
               return (
                 <li>
                   {this.state.editMode && (
-                    <input name={index} onChange={e => this.handleInput(e)} type="text" value={item} />
+                    <div>
+                      <input name={index} onChange={e => this.handleInput(e)} type="text" value={item} />
+                      <button className={styles.deleteButton} onClick={() => this.handleDelete(index)}>delete</button>
+                    </div>
                   )}
                   {!this.state.editMode && (
                     <span>{item}</span>
