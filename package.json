@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "build-production": "NODE_ENV=production webpack",
     "start": "webpack-dev-server"
   },
   "repository": {
@@ -30,6 +32,7 @@
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^6.0.0",
     "eslint-plugin-react": "^7.1.0",
+    "handlebars-webpack-plugin": "^1.2.0",
     "html-loader": "^0.4.5",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
