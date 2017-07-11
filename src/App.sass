@@ -1,5 +1,8 @@
+@import ./styles/Variables.sass
+
 *
   box-sizing: border-box
+  font-family: $font-stack
 
 a
   color: #fefcfd
@@ -14,8 +17,11 @@ button
   cursor: pointer
   border: none
   font-size: 18px
-  padding: 10px
-  width: 100%
+  padding: 10px 20px
+
+form
+  button
+    width: 100%
 
 h1, h2, h3, h4, h5, h6, p
   margin: 0
@@ -37,3 +43,8 @@ section
   min-width: 500px
   overflow: auto
   padding: 40px 20px
+
+ul
+  list-style: none
+  margin: 0
+  padding: 0

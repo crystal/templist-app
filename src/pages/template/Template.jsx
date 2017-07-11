@@ -8,8 +8,16 @@ class TemplatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      auth: false,
+      editMode: false,
       isLoading: true,
-      templates: []
+      isComplete: false,
+      isSubmitting: false,
+
+      description: '',
+      newTitle: '',
+      items: [],
+      title: ''
     };
   }
   componentWillMount() {
@@ -26,20 +34,147 @@ class TemplatePage extends Component {
         });
       }.bind(this));
   }
+  handleAuth() {
+    const authenticationSuccess = () => {
+      this.setState({
+        auth: true
+      });
+      this.handleExportSubmit();
+    };
+    const authenticationFailure = () => {
+      console.log('Failed authentication');
+    };
+
+    Trello.authorize({
+      type: 'popup',
+      name: 'Getting Started Application',
+      scope: {
+        read: 'true',
+        write: 'true' },
+      expiration: 'never',
+      success: authenticationSuccess.bind(this),
+      error: authenticationFailure
+    });
+  }
+  handleExport() {
+    if (!this.state.auth) {
+      this.handleAuth();
+      return;
+    }
+    this.handleExportSubmit();
+  }
+  handleExportSubmit() {
+    this.setState({
+      isSubmitting: true
+    });
+
+    const newBoard = {
+      name: this.state.newTitle || this.state.title
+    };
+    Trello.post('/boards/', newBoard, function (board) {
+      Trello.get(`/boards/${board.id}/lists`, function (lists) {
+        const myList = lists[0].id;
+        this.state.items.forEach(function (itemText) {
+          const newCard = {
+            name: itemText,
+            // Place this card at the bottom of my list
+            idList: myList,
+            pos: 'bottom'
+          };
+          Trello.post('/cards/', newCard, function () {
+            this.setState({
+              isComplete: true,
+              isSubmitting: false
+            });
+          }.bind(this));
+        }.bind(this));
+      }.bind(this));
+    }.bind(this));
+  }
+  handleInput({ target: { name, value } }) {
+    const items = this.state.items;
+    items[name] = value;
+
+    this.setState({
+      items
+    });
+  }
+  toggleEditMode(enabled) {
+    // set opposite of current edit mode by default
+    let editMode = !this.state.editMode;
+    // override edit mode setting
+    if (enabled !== undefined) {
+      editMode = enabled;
+    }
+    this.setState({
+      editMode
+    });
+  }
+  handleTitleInput({ target: { value } }) {
+    this.setState({
+      title: value
+    });
+  }
   render() {
+    if (this.state.isComplete) {
+      return (
+        <div>
+          <section>
+            <h2>You are done!</h2>
+            <p>Good job on your new list: <b>{this.state.newTitle || this.state.title}</b></p>
+          </section>
+        </div>
+      );
+    }
     if (this.state.isLoading) {
       return (
         <div>Loading...</div>
       );
     }
     return (
-      <div className={styles.templates}>
+      <div className={styles.template}>
         <section>
-          <h1>{this.state.title}</h1>
+          <div className={styles.buttons}>
+            {this.state.editMode && (
+              <div>
+                <button className={styles.editButton} onClick={() => this.toggleEditMode(false)}>
+                  cancel
+                </button>
+                <button className={styles.editButton} onClick={() => this.handleExport()}>
+                  {this.state.isSubmitting ? 'loading...' : 'export'}
+                </button>
+              </div>
+            )}
+            {!this.state.editMode && (
+              <div>
+                <button className={styles.editButton} onClick={() => this.toggleEditMode(true)}>
+                  edit this list!
+                </button>
+              </div>
+            )}
+          </div>
+          <h1>
+            {this.state.editMode && (
+              <input
+                onChange={e => this.handleTitleInput(e)}
+                value={this.state.newTitle || this.state.title}
+              />
+            )}
+            {!this.state.editMode && (
+              <span>{this.state.title}</span>
+            )}
+          </h1>
           <ul className={styles.items}>
-            {this.state.items.map((item) => {
+            {this.state.items.map((item, index) => {
               return (
-                <li>{item}</li>
+                <li>
+                  {this.state.editMode && (
+                    <input name={index} onChange={e => this.handleInput(e)} type="text" value={item} />
+                  )}
+                  {!this.state.editMode && (
+                    <span>{item}</span>
+                  )}
+                </li>
               );
             })}
           </ul>
