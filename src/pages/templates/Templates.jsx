@@ -32,7 +32,11 @@ class TemplatesPage extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <div>Loading...</div>
+        <div className={styles.templates}>
+          <section>
+            Loading...
+          </section>
+        </div>
       );
     }
     return (
