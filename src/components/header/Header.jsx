@@ -10,7 +10,9 @@ class Header extends React.Component {
       <div className={styles.header}>
         <section>
           <div className={styles.headerLogo}>
-            <h1>Templist</h1>
+            <h1>
+              <Link to="/">Templist</Link>
+            </h1>
           </div>
           <ul>
             <li>

@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import React from 'react';
 import thunk from 'redux-thunk';
 
@@ -10,10 +11,20 @@ import MainTemplate from './templates/main/Main';
 
 import AboutPage from './pages/about/About';
 import HomePage from './pages/home/Home';
+import LoginPage from './components/login/Login';
+import TemplatePage from './pages/template/Template';
 import TemplatesPage from './pages/templates/Templates';
-import LoginPage from './components/login/Login'
 
 import './App.sass';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyDwSND_9KKvt5ykZn23kto3SOG1kNzQTi8',
+  authDomain: 'to-do-templates.firebaseapp.com',
+  databaseURL: 'https://to-do-templates.firebaseio.com',
+  projectId: 'to-do-templates',
+  storageBucket: 'to-do-templates.appspot.com',
+  messagingSenderId: '337315917027'
+});
 
 const router = routerMiddleware(browserHistory);
 
@@ -35,8 +46,9 @@ render(
     <Route path="/" component={MainTemplate}>
       <IndexRoute component={HomePage} />
       <Route path="about" component={AboutPage} />
-      <Route path="templates" component={TemplatesPage} />
       <Route path="login" component={LoginPage} />
+      <Route path="templates" component={TemplatesPage} />
+      <Route path="templates/:listType" component={TemplatePage} />
     </Route>
   </Router>,
   document.getElementById('app')
