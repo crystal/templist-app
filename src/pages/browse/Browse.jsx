@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 
 import objectToArray from '../../lib/objectToArray';
 
-import styles from './Templates.sass';
+import styles from './Browse.sass';
 
-class TemplatesPage extends Component {
+class BrowsePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +80,7 @@ class TemplatesPage extends Component {
     return (
       <div className={styles.templates}>
         <section>
-          <h1>Templates</h1>
+          <h2>Browse</h2>
           <button onClick={() => this.seeSavedLists()}>My Lists</button>
           <ul className={styles.tiles}>
             {this.state.templates.map((template) => {
@@ -101,4 +101,4 @@ class TemplatesPage extends Component {
   }
 }
 
-export default TemplatesPage;
+export default BrowsePage;
