@@ -3,6 +3,8 @@ parser: babel-eslint
 rules:
   arrow-body-style:
     - off
+  class-methods-use-this:
+    - off
   comma-dangle:
     - error
     - never
