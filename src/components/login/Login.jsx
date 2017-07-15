@@ -2,6 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
 import login from '../../actions/login';
 
 import styles from './Login.sass';
@@ -34,7 +35,7 @@ class Login extends React.Component {
               <input name="email" onChange={e => this.handleInput(e)} type="text" value={this.state.email} />
               <label htmlFor="password">Password</label>
               <input name="password" onChange={e => this.handleInput(e)} type="password" value={this.state.password} />
-              <button>Login</button>
+              <Button>Login</Button>
             </form>
           </div>
         </section>

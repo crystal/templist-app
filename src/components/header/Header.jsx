@@ -19,29 +19,33 @@ class Header extends React.Component {
           </div>
           <ul className={styles.menu}>
             <li>
-              <Link to="/">Home</Link>
+              <Link className={styles.link} to="/">Home</Link>
             </li>
             <li>
-              <Link to="browse">Browse</Link>
+              <Link className={styles.link} to="browse">Browse</Link>
             </li>
             <li>
-              <Link to="about">About</Link>
+              <Link className={styles.link} to="about">About</Link>
             </li>
           </ul>
           {this.props.email && (
             <ul className={styles.account}>
               <li>
-                {this.props.email}
+                <Link className={styles.link} to="profile">{this.props.email}</Link>
               </li>
             </ul>
           )}
           {!this.props.email && (
             <ul className={styles.account}>
               <li>
-                <button onClick={() => this.props.showModal('login')}>Login</button>
+                <button className={styles.link} onClick={() => this.props.showModal('login')}>
+                  Login
+                </button>
               </li>
               <li>
-                <button onClick={() => this.props.showModal('signup')}>Sign Up</button>
+                <button className={styles.link} onClick={() => this.props.showModal('signup')}>
+                  Sign Up
+                </button>
               </li>
             </ul>
           )}

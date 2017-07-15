@@ -1,8 +1,11 @@
 import firebase from 'firebase';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import objectToArray from '../../lib/objectToArray';
+
+import showModal from '../../actions/showModal';
 
 import styles from './Browse.sass';
 
@@ -32,6 +35,10 @@ class BrowsePage extends Component {
       }.bind(this));
   }
   saveList(template) {
+    if (!this.props.isLoggedIn) {
+      this.props.showModal('login');
+      return
+    }
     const userId = 'testuser';
     firebase.database()
       .ref(`/users/${userId}/templates`)
@@ -90,7 +97,14 @@ class BrowsePage extends Component {
                     <h3>{template.title}</h3>
                     <p>{template.description}</p>
                   </Link>
-                  <button onClick={() => this.saveList(template)}>save {template.title}!</button>
+                  <button onClick={() => this.saveList(template)}>
+                    {!this.props.isLoggedIn && (
+                      <span>Please login to save</span>
+                    )}
+                    {this.props.isLoggedIn && (
+                      <span>save {template.title}!</span>
+                    )}
+                  </button>
                 </li>
               );
             })}
@@ -101,4 +115,28 @@ class BrowsePage extends Component {
   }
 }
 
-export default BrowsePage;
+BrowsePage.defaultProps = {
+  isLoggedIn: false,
+  showModal: () => {}
+};
+
+BrowsePage.propTypes = {
+  isLoggedIn: React.PropTypes.bool,
+  showModal: React.PropTypes.func
+};
+
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.user.isLoggedIn
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showModal: (currentModal) => {
+      dispatch(showModal(currentModal));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BrowsePage);

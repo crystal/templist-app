@@ -5,7 +5,7 @@ const initialState = {
   isLoggedIn: false
 };
 
-function modalReducer(state = initialState, action) {
+function userReducer(state = initialState, action) {
   switch (action.type) {
     case 'LOGIN_REQ': {
       return {
@@ -40,4 +40,4 @@ function modalReducer(state = initialState, action) {
   }
 }
 
-export default modalReducer;
+export default userReducer;
