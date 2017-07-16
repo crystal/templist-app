@@ -1,11 +1,13 @@
 import firebase from 'firebase';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import objectToArray from '../../lib/objectToArray';
 
 import showModal from '../../actions/showModal';
+
+import Tile from '../../components/tile/Tile';
+import Tiles from '../../components/tiles/Tiles';
 
 import styles from './Browse.sass';
 
@@ -88,27 +90,20 @@ class BrowsePage extends Component {
       <div className={styles.templates}>
         <section>
           <h2>Browse</h2>
-          <button onClick={() => this.seeSavedLists()}>My Lists</button>
-          <ul className={styles.tiles}>
+          <Tiles>
             {this.state.templates.map((template) => {
               return (
-                <li key={template.key}>
-                  <Link className={styles.tile} to={`templates/${template.key}`}>
-                    <h3>{template.title}</h3>
-                    <p>{template.description}</p>
-                  </Link>
-                  <button onClick={() => this.saveList(template)}>
-                    {!this.props.isLoggedIn && (
-                      <span>Please login to save</span>
-                    )}
-                    {this.props.isLoggedIn && (
-                      <span>save {template.title}!</span>
-                    )}
-                  </button>
-                </li>
+                <Tile
+                  key={template.key}
+                  isFavorite={template.isFavorite}
+                  title={template.title}
+                  description={template.description}
+                  url={`templates/${template.key}`}
+                  items={template.items}
+                />
               );
             })}
-          </ul>
+          </Tiles>
         </section>
       </div>
     );

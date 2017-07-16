@@ -2,6 +2,8 @@ import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import Button from '../../components/button/Button';
+
 import styles from './Template.sass';
 
 class TemplatePage extends Component {
@@ -150,28 +152,30 @@ class TemplatePage extends Component {
           <div className={styles.buttons}>
             {this.state.editMode && (
               <div>
-                <button className={styles.editButton} onClick={() => this.toggleEditMode(false)}>
+                <Button className={styles.editButton} onClick={() => this.toggleEditMode(false)}>
                   cancel
-                </button>
+                </Button>
                 {/* if logged in and in edit mode, then show save button */}
-                <button
+                <Button
                   className={styles.saveButton}
                   onClick={() => this.handleSave()}
-                >save</button>
-                <button className={styles.editButton} onClick={() => this.handleExport()}>
+                >
+                  save
+                </Button>
+                <Button className={styles.editButton} onClick={() => this.handleExport()}>
                   {this.state.isSubmitting ? 'loading...' : 'export'}
-                </button>
+                </Button>
               </div>
             )}
             {!this.state.editMode && (
               <div>
-                <button className={styles.editButton} onClick={() => this.toggleEditMode(true)}>
+                <Button className={styles.editButton} onClick={() => this.toggleEditMode(true)}>
                   edit this list!
-                </button>
+                </Button>
               </div>
             )}
           </div>
-          <h1>
+          <h2>
             {this.state.editMode && (
               <input
                 onChange={e => this.handleTitleInput(e)}
@@ -181,7 +185,7 @@ class TemplatePage extends Component {
             {!this.state.editMode && (
               <span>{this.state.title}</span>
             )}
-          </h1>
+          </h2>
           <ul className={styles.items}>
             {this.state.items.map((item, index) => {
               return (

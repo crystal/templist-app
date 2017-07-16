@@ -1,14 +1,17 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import styles from './Button.sass';
+import styles from './IconButton.sass';
 
-class Button extends React.Component {
+class IconButton extends React.Component {
   render() {
     return (
       <button
         className={classNames(styles.button, this.props.className)}
         onClick={this.props.onClick}
+        style={{
+          backgroundImage: `url(images/icons/${this.props.type}.svg)`
+        }}
       >
         {this.props.children}
       </button>
@@ -16,16 +19,18 @@ class Button extends React.Component {
   }
 }
 
-Button.defaultProps = {
+IconButton.defaultProps = {
   children: <span />,
   className: '',
-  onClick: () => {}
+  onClick: () => {},
+  type: ''
 };
 
-Button.propTypes = {
+IconButton.propTypes = {
   children: React.PropTypes.object,
   className: React.PropTypes.string,
-  onClick: React.PropTypes.func
+  onClick: React.PropTypes.func,
+  type: React.PropTypes.string
 };
 
-export default Button;
+export default IconButton;

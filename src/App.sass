@@ -1,14 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif)
 @import ./styles/Variables.sass
 
 *
   box-sizing: border-box
-  font-family: $font-stack
 
 a
   color: #fefcfd
   text-decoration: none
 
 body
+  font-family: $font-stack
   font-size: 16px
   margin: 0
 
@@ -18,6 +19,7 @@ button
   color: #000
   cursor: pointer
   font-size: 16px
+  outline: none
 
 form
   button
@@ -26,6 +28,12 @@ form
 h1, h2, h3, h4, h5, h6, p
   margin: 0
   padding: 0 0 20px 0
+
+h1, h2, h3
+  font-family: Droid Serif
+
+h2
+  color: #252d54
 
 label
   display: block

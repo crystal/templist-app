@@ -12,15 +12,7 @@ class Header extends React.Component {
     return (
       <div className={styles.header}>
         <section>
-          <div className={styles.headerLogo}>
-            <h1>
-              <Link to="/">Templist</Link>
-            </h1>
-          </div>
           <ul className={styles.menu}>
-            <li>
-              <Link className={styles.link} to="/">Home</Link>
-            </li>
             <li>
               <Link className={styles.link} to="browse">Browse</Link>
             </li>
@@ -49,6 +41,11 @@ class Header extends React.Component {
               </li>
             </ul>
           )}
+          <div className={styles.headerLogo}>
+            <h1>
+              <Link className={styles.link} to="/">TL</Link>
+            </h1>
+          </div>
         </section>
       </div>
     );
