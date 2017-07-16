@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Button from '../button/Button';
 import login from '../../actions/login';
 
-import styles from './Login.sass';
+import styles from './LoginForm.sass';
 
-class Login extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,11 +44,11 @@ class Login extends React.Component {
   }
 }
 
-Login.defaultProps = {
+LoginForm.defaultProps = {
   login: () => {}
 };
 
-Login.propTypes = {
+LoginForm.propTypes = {
   login: React.PropTypes.func
 };
 
@@ -60,4 +60,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(LoginForm);

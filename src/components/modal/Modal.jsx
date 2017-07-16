@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import hideModal from '../../actions/hideModal';
-import Login from '../login/Login';
+import LoginForm from '../login-form/LoginForm';
+import SignupForm from '../signup-form/SignupForm';
 
 import styles from './Modal.sass';
 
@@ -14,7 +15,12 @@ class Modal extends React.Component {
         <button className={styles.bg} onClick={() => this.props.hideModal()} />
         <div className={styles.modal}>
           <button onClick={() => this.props.hideModal()}>Close</button>
-          <Login />
+          {this.props.currentModal === 'login' && (
+            <LoginForm />
+          )}
+          {this.props.currentModal === 'signup' && (
+            <SignupForm />
+          )}
           {this.props.children}
         </div>
       </div>
@@ -24,13 +30,21 @@ class Modal extends React.Component {
 
 Modal.defaultProps = {
   children: <div />,
+  currentModal: '',
   hideModal: () => {}
 };
 
 Modal.propTypes = {
   children: React.PropTypes.object,
+  currentModal: React.PropTypes.string,
   hideModal: React.PropTypes.func
 };
+
+function mapStateToProps(state) {
+  return {
+    currentModal: state.modal.currentModal
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -40,4 +54,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Modal);
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
