@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import hideModal from '../../actions/hideModal';
 
 import CopyForm from '../../forms/copy/CopyForm';
+import DeleteTemplateForm from '../../forms/delete-template/DeleteTemplateForm';
 import ExportForm from '../../forms/export/ExportForm';
 import LoginForm from '../../forms/login/LoginForm';
 import SignupForm from '../../forms/signup/SignupForm';
@@ -21,6 +22,9 @@ class Modal extends React.Component {
           <button onClick={() => this.props.hideModal()}>Close</button>
           {this.props.currentModal === 'copy' && (
             <CopyForm />
+          )}
+          {this.props.currentModal === 'deleteTemplate' && (
+            <DeleteTemplateForm />
           )}
           {this.props.currentModal === 'export' && (
             <ExportForm />

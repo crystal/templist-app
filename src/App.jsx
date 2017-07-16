@@ -18,6 +18,7 @@ import MyTemplatesPage from './pages/my-templates/MyTemplates';
 import TemplatePage from './pages/template/Template';
 
 import copyReducer from './reducers/copy';
+import deleteTemplateReducer from './reducers/deleteTemplate';
 import exportReducer from './reducers/export';
 import modalReducer from './reducers/modal';
 import userReducer from './reducers/user';
@@ -38,6 +39,7 @@ const router = routerMiddleware(browserHistory);
 const store = createStore(
   combineReducers({
     copy: copyReducer,
+    deleteTemplate: deleteTemplateReducer,
     export: exportReducer,
     modal: modalReducer,
     routing: routerReducer,

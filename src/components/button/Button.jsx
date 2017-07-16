@@ -9,6 +9,7 @@ class Button extends React.Component {
     return (
       <button
         className={classNames(styles.button, this.props.className)}
+        disabled={this.props.disabled}
         onClick={this.props.onClick}
       >
         {this.props.children}
@@ -20,12 +21,14 @@ class Button extends React.Component {
 Button.defaultProps = {
   children: '',
   className: '',
+  disabled: false,
   onClick: () => {}
 };
 
 Button.propTypes = {
   children: PropTypes.string,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func
 };
 

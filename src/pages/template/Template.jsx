@@ -23,6 +23,7 @@ class TemplatePage extends Component {
 
       author: '',
       description: '',
+      key: '',
       newTitle: '',
       items: [],
       title: ''
@@ -32,7 +33,9 @@ class TemplatePage extends Component {
     this.loadTemplate();
   }
   componentWillUpdate(nextProps) {
-    if (nextProps.isSaved) {
+    if (nextProps.isDeleted) {
+      this.props.push('/my/templates');
+    } else if (nextProps.isSaved) {
       this.props.push(`/templates/${nextProps.newKey}`);
       this.props.resetTemplate();
       this.loadTemplate();
@@ -109,14 +112,11 @@ class TemplatePage extends Component {
       title: this.state.title
     });
   }
-  handleDelete(index) {
-    // use splice to alter the array of items and return it
-    //  w/o the deleted item items.splice(X, 1)
-    const items = this.state.items;
-    items.splice(index, 1);
-    this.setState({ items });
+  handleDelete() {
+    this.props.showModal('deleteTemplate', {
+      key: this.state.key
+    });
   }
-
   handleSave() {
     if (!this.props.isLoggedIn) {
       this.props.showModal('login');
@@ -151,6 +151,7 @@ class TemplatePage extends Component {
           author: template.author,
           description: template.description,
           items: template.items,
+          key: this.props.router.params.listType,
           title: template.title
         });
       }.bind(this));
@@ -200,13 +201,22 @@ class TemplatePage extends Component {
             {!this.state.editMode && (
               <div>
                 {this.props.uid === this.state.author && (
-                  <IconButton
-                    className={styles.editButton}
-                    onClick={() => this.toggleEditMode(true)}
-                    size={32}
-                    title="edit this template!"
-                    type="writing"
-                  />
+                  <span>
+                    <IconButton
+                      className={styles.editButton}
+                      onClick={() => this.toggleEditMode(true)}
+                      size={32}
+                      title="edit this template!"
+                      type="writing"
+                    />
+                    <IconButton
+                      className={styles.editButton}
+                      onClick={() => this.handleDelete()}
+                      size={32}
+                      title="Delete this template"
+                      type="garbage"
+                    />
+                  </span>
                 )}
                 <IconButton
                   className={styles.editButton}
@@ -276,6 +286,7 @@ class TemplatePage extends Component {
 TemplatePage.defaultProps = {
   exportTitle: '',
   exportUrl: '',
+  isDeleted: false,
   isExported: false,
   isLoggedIn: false,
   isSaved: false,
@@ -290,6 +301,7 @@ TemplatePage.defaultProps = {
 TemplatePage.propTypes = {
   exportTitle: PropTypes.string,
   exportUrl: PropTypes.string,
+  isDeleted: PropTypes.bool,
   isExported: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
   isSaved: PropTypes.bool,
@@ -305,6 +317,7 @@ function mapStateToProps(state) {
   return {
     exportTitle: state.export.title,
     exportUrl: state.export.url,
+    isDeleted: state.deleteTemplate.isComplete,
     isExported: state.export.isComplete,
     isSaved: state.copy.isComplete,
     isLoggedIn: state.user.isLoggedIn,

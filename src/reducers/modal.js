@@ -23,6 +23,12 @@ function modalReducer(state = initialState, action) {
         currentModal: ''
       };
     }
+    case 'DELETE_TEMPLATE_RES': {
+      return {
+        ...state,
+        currentModal: ''
+      };
+    }
     case 'EXPORT_TEMPLATE_RES': {
       return {
         ...state,
