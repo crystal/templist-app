@@ -14,6 +14,8 @@ import AboutPage from './pages/about/About';
 import BrowsePage from './pages/browse/Browse';
 import HomePage from './pages/home/Home';
 import LoginPage from './components/login/Login';
+import MyFavoritesPage from './pages/my-favorites/MyFavorites';
+import MyTemplatesPage from './pages/my-templates/MyTemplates';
 import TemplatePage from './pages/template/Template';
 
 import modalReducer from './reducers/modal';
@@ -61,6 +63,8 @@ render(
         <Route path="about" component={AboutPage} />
         <Route path="browse" component={BrowsePage} />
         <Route path="login" component={LoginPage} />
+        <Route path="my/favorites" component={MyFavoritesPage} />
+        <Route path="my/templates" component={MyTemplatesPage} />
         <Route path="templates/:listType" component={TemplatePage} />
       </Route>
     </Router>

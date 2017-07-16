@@ -2,6 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
+import autologin from '../../actions/autologin';
+
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import Modal from '../../components/modal/Modal';
@@ -9,6 +11,9 @@ import Modal from '../../components/modal/Modal';
 import styles from './Main.sass';
 
 class MainTemplate extends React.Component {
+  componentWillMount() {
+    this.props.autologin();
+  }
   render() {
     return (
       <div className={styles.main}>
@@ -24,11 +29,13 @@ class MainTemplate extends React.Component {
 }
 
 MainTemplate.defaultProps = {
+  autologin: () => {},
   children: {},
   currentModal: ''
 };
 
 MainTemplate.propTypes = {
+  autologin: React.PropTypes.function,
   children: React.PropTypes.object,
   currentModal: React.PropTypes.string
 };
@@ -39,4 +46,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(MainTemplate);
+function mapDispatchToProps(dispatch) {
+  return {
+    autologin: (currentModal) => {
+      dispatch(autologin(currentModal));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainTemplate);

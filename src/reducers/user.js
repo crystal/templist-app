@@ -2,7 +2,8 @@ const initialState = {
   email: '',
   error: '',
   isLoading: false,
-  isLoggedIn: false
+  isLoggedIn: false,
+  uid: ''
 };
 
 function userReducer(state = initialState, action) {
@@ -13,7 +14,8 @@ function userReducer(state = initialState, action) {
         email: '',
         error: '',
         isLoading: true,
-        isLoggedIn: false
+        isLoggedIn: false,
+        uid: ''
       };
     }
     case 'LOGIN_RES': {
@@ -22,7 +24,8 @@ function userReducer(state = initialState, action) {
         email: action.email,
         error: '',
         isLoading: false,
-        isLoggedIn: true
+        isLoggedIn: true,
+        uid: action.uid
       };
     }
     case 'LOGIN_ERR': {
@@ -31,7 +34,8 @@ function userReducer(state = initialState, action) {
         email: '',
         error: action.error,
         isLoading: false,
-        isLoggedIn: false
+        isLoggedIn: false,
+        uid: ''
       };
     }
     default: {

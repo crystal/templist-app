@@ -14,14 +14,23 @@ class Header extends React.Component {
         <section>
           <ul className={styles.menu}>
             <li>
-              <Link className={styles.link} to="browse">Browse</Link>
+              <Link className={styles.link} to="browse">Browse Templates</Link>
             </li>
             <li>
-              <Link className={styles.link} to="about">About</Link>
+              <Link className={styles.link} to="about">How It Works</Link>
+            </li>
+            <li>
+              <Link className={styles.link} to="contact">Contact</Link>
             </li>
           </ul>
           {this.props.email && (
             <ul className={styles.account}>
+              <li>
+                <Link className={styles.link} to="my/templates">My Templates</Link>
+              </li>
+              <li>
+                <Link className={styles.link} to="my/favorites">My Favorites</Link>
+              </li>
               <li>
                 <Link className={styles.link} to="profile">{this.props.email}</Link>
               </li>

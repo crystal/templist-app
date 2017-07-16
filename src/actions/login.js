@@ -10,7 +10,8 @@ function login(email, password) {
       .then(function handleResponse(res) {
         dispatch({
           type: 'LOGIN_RES',
-          email: res.email
+          email: res.email,
+          uid: res.uid
         });
       })
       .catch(function handleError(error) {

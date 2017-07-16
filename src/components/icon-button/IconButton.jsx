@@ -14,6 +14,7 @@ class IconButton extends React.Component {
           height: this.props.size,
           width: this.props.size
         }}
+        title={this.props.title}
       >
         {this.props.children}
       </button>
@@ -26,6 +27,7 @@ IconButton.defaultProps = {
   className: '',
   onClick: () => {},
   size: 16,
+  title: '',
   type: ''
 };
 
@@ -34,6 +36,7 @@ IconButton.propTypes = {
   className: React.PropTypes.string,
   onClick: React.PropTypes.func,
   size: React.PropTypes.number,
+  title: React.PropTypes.string,
   type: React.PropTypes.string
 };
 

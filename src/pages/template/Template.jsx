@@ -1,6 +1,9 @@
 import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import showModal from '../../actions/showModal';
 
 import Button from '../../components/button/Button';
 import IconButton from '../../components/icon-button/IconButton';
@@ -17,6 +20,7 @@ class TemplatePage extends Component {
       isComplete: false,
       isSubmitting: false,
 
+      author: '',
       description: '',
       newTitle: '',
       items: [],
@@ -31,6 +35,7 @@ class TemplatePage extends Component {
         const template = snapshot.val();
         this.setState({
           isLoading: false,
+          author: template.author,
           description: template.description,
           items: template.items,
           title: template.title
@@ -113,6 +118,23 @@ class TemplatePage extends Component {
       editMode
     });
   }
+  handleCopy() {
+    if (!this.props.isLoggedIn) {
+      this.props.showModal('login');
+      return;
+    }
+    firebase.database()
+      .ref('/templates')
+      .push({
+        author: this.props.uid,
+        description: this.state.description,
+        items: this.state.items,
+        title: this.state.title
+      })
+      .then(function getSnapshot(snapshot) {
+        console.log(snapshot);
+      }.bind(this));
+  }
   handleDelete(index) {
     // use splice to alter the array of items and return it
     //  w/o the deleted item items.splice(X, 1)
@@ -122,8 +144,21 @@ class TemplatePage extends Component {
   }
 
   handleSave() {
-    console.log(this.state.items);
-
+    if (!this.props.isLoggedIn) {
+      this.props.showModal('login');
+      return;
+    }
+    firebase.database()
+      .ref(`/templates/${this.props.router.params.listType}`)
+      .set({
+        author: this.props.uid,
+        description: this.state.description,
+        items: this.state.items,
+        title: this.state.title
+      })
+      .then(function getSnapshot(snapshot) {
+        window.reload();
+      }.bind(this));
   }
 
   handleTitleInput({ target: { value } }) {
@@ -170,22 +205,34 @@ class TemplatePage extends Component {
             )}
             {!this.state.editMode && (
               <div>
-                <IconButton
-                  className={styles.editButton}
-                  onClick={() => this.toggleEditMode(true)}
-                  size={32}
-                  type="writing"
-                />
+                {this.props.uid === this.state.author && (
+                  <IconButton
+                    className={styles.editButton}
+                    onClick={() => this.toggleEditMode(true)}
+                    size={32}
+                    title="edit this template!"
+                    type="writing"
+                  />
+                )}
                 <IconButton
                   className={styles.editButton}
                   onClick={() => this.handleCopy()}
                   size={32}
+                  title="copy this template!"
                   type="layer"
+                />
+                <IconButton
+                  className={styles.editButton}
+                  onClick={() => this.handleShare()}
+                  size={32}
+                  title="share this template!"
+                  type="share"
                 />
                 <IconButton
                   className={styles.editButton}
                   onClick={() => this.handleExport()}
                   size={32}
+                  title="export this template!"
                   type="send"
                 />
               </div>
@@ -227,13 +274,33 @@ class TemplatePage extends Component {
   }
 }
 
-
 TemplatePage.defaultProps = {
-  router: {}
+  isLoggedIn: false,
+  router: {},
+  showModal: () => {},
+  uid: ''
 };
 
 TemplatePage.propTypes = {
-  router: PropTypes.object
+  isLoggedIn: PropTypes.bool,
+  router: PropTypes.object,
+  showModal: PropTypes.func,
+  uid: PropTypes.string
 };
 
-export default TemplatePage;
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.user.isLoggedIn,
+    uid: state.user.uid
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showModal: (currentModal) => {
+      dispatch(showModal(currentModal));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TemplatePage);

@@ -2,16 +2,14 @@ import firebase from 'firebase';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import objectToArray from '../../lib/objectToArray';
-
 import showModal from '../../actions/showModal';
 
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
-import styles from './Browse.sass';
+import styles from './MyTemplates.sass';
 
-class BrowsePage extends Component {
+class MyTemplatesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,31 +19,21 @@ class BrowsePage extends Component {
   }
   componentWillMount() {
     firebase.database()
-      .ref(`/users/${this.props.uid}`)
+      .ref('/templates')
       .once('value')
-      .then(function getSnapshot(userSnapshot) {
-        const user = userSnapshot.val() || {};
-        const userObj = user[this.props.uid] || user || {};
-        const favorites = userObj.favorites || [];
-        firebase.database()
-          .ref('/templates')
-          .once('value')
-          .then(function getTemplatesSnapshot(templatesSnapshot) {
-            const response = templatesSnapshot.val();
-            const templates = [];
-            Object.keys(response).forEach((key) => {
-              const template = response[key];
-              if (!template.author) {
-                template.key = key;
-                template.isFavorite = favorites.includes(key);
-                templates.push(Object.assign(template, { key }));
-              }
-            });
-            this.setState({
-              isLoading: false,
-              templates
-            });
-          }.bind(this));
+      .then(function getSnapshot(snapshot) {
+        const response = snapshot.val();
+        const templates = [];
+        Object.keys(response).forEach((key) => {
+          const template = response[key];
+          if (template.author === this.props.uid) {
+            templates.push(Object.assign(template, { key }));
+          }
+        });
+        this.setState({
+          isLoading: false,
+          templates
+        });
       }.bind(this));
   }
   saveList(template) {
@@ -64,30 +52,6 @@ class BrowsePage extends Component {
         console.log('done!');
       });
   }
-
-  seeSavedLists() {
-    const userId = 'testuser';
-    firebase.database()
-      .ref(`/users/${userId}/templates`)
-      .once('value')
-      .then(function getSnapshot(snapshot) {
-        const value = snapshot.val();
-        const templates = objectToArray(value);
-        templates.map((template) => {
-          const titles = template.title;
-          console.log(titles);
-          return titles;
-        });
-
-        // this.setState({
-        //   isLoading: false,
-        //   description: template.description,
-        //   items: template.items,
-        //   title: template.title
-        // });
-      }.bind(this));
-  }
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -101,13 +65,13 @@ class BrowsePage extends Component {
     return (
       <div className={styles.templates}>
         <section>
-          <h2>Browse</h2>
+          <h2>My Templates</h2>
           <Tiles>
             {this.state.templates.map((template) => {
               return (
                 <Tile
                   id={template.key}
-                  key={`browse-${template.key}`}
+                  key={`my-templates-${template.key}`}
                   isFavorite={template.isFavorite}
                   title={template.title}
                   description={template.description}
@@ -123,13 +87,13 @@ class BrowsePage extends Component {
   }
 }
 
-BrowsePage.defaultProps = {
+MyTemplatesPage.defaultProps = {
   isLoggedIn: false,
   showModal: () => {},
   uid: ''
 };
 
-BrowsePage.propTypes = {
+MyTemplatesPage.propTypes = {
   isLoggedIn: React.PropTypes.bool,
   showModal: React.PropTypes.func,
   uid: React.PropTypes.string
@@ -150,4 +114,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BrowsePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyTemplatesPage);

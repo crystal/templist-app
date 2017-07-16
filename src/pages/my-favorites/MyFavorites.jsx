@@ -2,16 +2,14 @@ import firebase from 'firebase';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import objectToArray from '../../lib/objectToArray';
-
 import showModal from '../../actions/showModal';
 
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
-import styles from './Browse.sass';
+import styles from './MyFavorites.sass';
 
-class BrowsePage extends Component {
+class MyFavoritesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +21,7 @@ class BrowsePage extends Component {
     firebase.database()
       .ref(`/users/${this.props.uid}`)
       .once('value')
-      .then(function getSnapshot(userSnapshot) {
+      .then(function getFavoritesSnapshot(userSnapshot) {
         const user = userSnapshot.val() || {};
         const userObj = user[this.props.uid] || user || {};
         const favorites = userObj.favorites || [];
@@ -31,11 +29,11 @@ class BrowsePage extends Component {
           .ref('/templates')
           .once('value')
           .then(function getTemplatesSnapshot(templatesSnapshot) {
-            const response = templatesSnapshot.val();
+            const templatesResponse = templatesSnapshot.val();
             const templates = [];
-            Object.keys(response).forEach((key) => {
-              const template = response[key];
-              if (!template.author) {
+            Object.keys(templatesResponse).forEach((key) => {
+              const template = templatesResponse[key];
+              if (favorites.includes(key)) {
                 template.key = key;
                 template.isFavorite = favorites.includes(key);
                 templates.push(Object.assign(template, { key }));
@@ -64,30 +62,6 @@ class BrowsePage extends Component {
         console.log('done!');
       });
   }
-
-  seeSavedLists() {
-    const userId = 'testuser';
-    firebase.database()
-      .ref(`/users/${userId}/templates`)
-      .once('value')
-      .then(function getSnapshot(snapshot) {
-        const value = snapshot.val();
-        const templates = objectToArray(value);
-        templates.map((template) => {
-          const titles = template.title;
-          console.log(titles);
-          return titles;
-        });
-
-        // this.setState({
-        //   isLoading: false,
-        //   description: template.description,
-        //   items: template.items,
-        //   title: template.title
-        // });
-      }.bind(this));
-  }
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -101,13 +75,13 @@ class BrowsePage extends Component {
     return (
       <div className={styles.templates}>
         <section>
-          <h2>Browse</h2>
+          <h2>My Favorites</h2>
           <Tiles>
             {this.state.templates.map((template) => {
               return (
                 <Tile
                   id={template.key}
-                  key={`browse-${template.key}`}
+                  key={`my-favorites-${template.key}`}
                   isFavorite={template.isFavorite}
                   title={template.title}
                   description={template.description}
@@ -123,13 +97,13 @@ class BrowsePage extends Component {
   }
 }
 
-BrowsePage.defaultProps = {
+MyFavoritesPage.defaultProps = {
   isLoggedIn: false,
   showModal: () => {},
   uid: ''
 };
 
-BrowsePage.propTypes = {
+MyFavoritesPage.propTypes = {
   isLoggedIn: React.PropTypes.bool,
   showModal: React.PropTypes.func,
   uid: React.PropTypes.string
@@ -150,4 +124,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BrowsePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyFavoritesPage);
