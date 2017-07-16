@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import Button from '../../components/button/Button';
+import IconButton from '../../components/icon-button/IconButton';
 
 import styles from './Template.sass';
 
@@ -169,9 +170,24 @@ class TemplatePage extends Component {
             )}
             {!this.state.editMode && (
               <div>
-                <Button className={styles.editButton} onClick={() => this.toggleEditMode(true)}>
-                  edit this list!
-                </Button>
+                <IconButton
+                  className={styles.editButton}
+                  onClick={() => this.toggleEditMode(true)}
+                  size={32}
+                  type="writing"
+                />
+                <IconButton
+                  className={styles.editButton}
+                  onClick={() => this.handleCopy()}
+                  size={32}
+                  type="layer"
+                />
+                <IconButton
+                  className={styles.editButton}
+                  onClick={() => this.handleExport()}
+                  size={32}
+                  type="send"
+                />
               </div>
             )}
           </div>
@@ -186,6 +202,7 @@ class TemplatePage extends Component {
               <span>{this.state.title}</span>
             )}
           </h2>
+          <p>{this.state.description}</p>
           <ul className={styles.items}>
             {this.state.items.map((item, index) => {
               return (
@@ -203,6 +220,7 @@ class TemplatePage extends Component {
               );
             })}
           </ul>
+          <div className={styles.margin} />
         </section>
       </div>
     );

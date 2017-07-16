@@ -10,7 +10,8 @@ class Footer extends React.Component {
       <div className={styles.footer}>
         <section>
           <div className={styles.footer}>
-            <h1>Footer!!</h1>
+            <h3><Link to="/">TempList</Link></h3>
+            <p>&copy; 2017 TempList. All Rights Reserved.</p>
           </div>
         </section>
       </div>

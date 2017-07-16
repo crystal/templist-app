@@ -1,19 +1,31 @@
 @import ../../styles/Variables.sass
+$left-padding: 120px
 
 .buttons
   float: right
+  padding: 25px
 
   button
-    margin-left: 10px
-    margin-top: 10px
+    margin-left: 20px
+
+.margin
+  background-color: #FFCCCC
+  left: 100px
+  height: 100%
+  position: absolute
+  top: 0
+  width: 1px
 
 .template
   background-color: $light-blue
   padding: 50px
 
+  h2
+    padding: 20px 0 5px $left-padding
+
   li
     border-bottom: 1px #ccc solid
-    padding: 20px 0
+    padding: 20px 0 20px $left-padding
 
     &:last-of-type
       border-bottom: none
@@ -21,8 +33,13 @@
     input
       border: none
 
+  p
+    padding: 0 0 20px $left-padding
+    border-bottom: 1px lightblue solid
+
   section
     background-color: #FFF
-    border-top-left-radius: 20px
-    border-top-right-radius: 20px
+    border-radius: 3px
     box-shadow: $shadow
+    padding: 0
+    position: relative

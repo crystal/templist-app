@@ -49,7 +49,13 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router
+      history={history}
+      onUpdate={() => {
+        window.scrollTo(100, 100);
+        window.scrollTo(0, 0);
+      }}
+    >
       <Route path="/" component={MainTemplate}>
         <IndexRoute component={HomePage} />
         <Route path="about" component={AboutPage} />
