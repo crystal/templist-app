@@ -38,6 +38,36 @@ function userReducer(state = initialState, action) {
         uid: ''
       };
     }
+    case 'LOGOUT_REQ': {
+      return {
+        ...state,
+        email: '',
+        error: '',
+        isLoading: true,
+        isLoggedIn: false,
+        uid: ''
+      };
+    }
+    case 'LOGOUT_RES': {
+      return {
+        ...state,
+        email: '',
+        error: '',
+        isLoading: false,
+        isLoggedIn: false,
+        uid: ''
+      };
+    }
+    case 'LOGOUT_ERR': {
+      return {
+        ...state,
+        email: '',
+        error: action.error,
+        isLoading: false,
+        isLoggedIn: false,
+        uid: ''
+      };
+    }
     default: {
       return state;
     }

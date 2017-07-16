@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+import logout from '../../actions/logout';
 import showModal from '../../actions/showModal';
 
 import styles from './Header.sass';
@@ -34,6 +35,11 @@ class Header extends React.Component {
               <li>
                 <Link className={styles.link} to="profile">{this.props.email}</Link>
               </li>
+              <li>
+                <button className={styles.link} onClick={() => this.props.logout()}>
+                  Logout
+                </button>
+              </li>
             </ul>
           )}
           {!this.props.email && (
@@ -63,11 +69,13 @@ class Header extends React.Component {
 
 Header.defaultProps = {
   email: '',
+  logout: () => {},
   showModal: () => {}
 };
 
 Header.propTypes = {
   email: React.PropTypes.func,
+  logout: React.PropTypes.func,
   showModal: React.PropTypes.func
 };
 
@@ -79,6 +87,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    logout: () => {
+      dispatch(logout());
+    },
     showModal: (currentModal) => {
       dispatch(showModal(currentModal));
     }
