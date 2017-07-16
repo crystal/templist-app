@@ -8,9 +8,10 @@ function copy(template) {
     firebase.database()
       .ref('/templates')
       .push(template)
-      .then(() => {
+      .then((newTemplate) => {
         dispatch({
-          type: 'COPY_RES'
+          type: 'COPY_RES',
+          newKey: newTemplate.key
         });
       })
       .catch((error) => {

@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
 
 import hideModal from '../../actions/hideModal';
 
-import CopyForm from '../copy-form/CopyForm';
-import LoginForm from '../login-form/LoginForm';
-import SignupForm from '../signup-form/SignupForm';
+import CopyForm from '../../forms/copy/CopyForm';
+import ExportForm from '../../forms/export/ExportForm';
+import LoginForm from '../../forms/login/LoginForm';
+import SignupForm from '../../forms/signup/SignupForm';
 
 import styles from './Modal.sass';
 
@@ -19,6 +21,9 @@ class Modal extends React.Component {
           <button onClick={() => this.props.hideModal()}>Close</button>
           {this.props.currentModal === 'copy' && (
             <CopyForm />
+          )}
+          {this.props.currentModal === 'export' && (
+            <ExportForm />
           )}
           {this.props.currentModal === 'login' && (
             <LoginForm />
@@ -40,9 +45,9 @@ Modal.defaultProps = {
 };
 
 Modal.propTypes = {
-  children: React.PropTypes.object,
-  currentModal: React.PropTypes.string,
-  hideModal: React.PropTypes.func
+  children: PropTypes.object,
+  currentModal: PropTypes.string,
+  hideModal: PropTypes.func
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -94,9 +95,9 @@ MyTemplatesPage.defaultProps = {
 };
 
 MyTemplatesPage.propTypes = {
-  isLoggedIn: React.PropTypes.bool,
-  showModal: React.PropTypes.func,
-  uid: React.PropTypes.string
+  isLoggedIn: PropTypes.bool,
+  showModal: PropTypes.func,
+  uid: PropTypes.string
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './IconButton.sass';
@@ -32,12 +33,12 @@ IconButton.defaultProps = {
 };
 
 IconButton.propTypes = {
-  children: React.PropTypes.object,
-  className: React.PropTypes.string,
-  onClick: React.PropTypes.func,
-  size: React.PropTypes.number,
-  title: React.PropTypes.string,
-  type: React.PropTypes.string
+  children: PropTypes.object,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  size: PropTypes.number,
+  title: PropTypes.string,
+  type: PropTypes.string
 };
 
 export default IconButton;

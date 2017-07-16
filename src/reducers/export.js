@@ -5,36 +5,40 @@ const initialState = {
   originalDescription: '',
   originalItems: [],
   originalTitle: '',
-  newKey: ''
+  title: '',
+  url: ''
 };
 
-function copyReducer(state = initialState, action) {
+function exportReducer(state = initialState, action) {
   switch (action.type) {
-    case 'COPY_REQ': {
+    case 'EXPORT_TEMPLATE_REQ': {
       return {
         ...state,
         error: '',
         isComplete: false,
         isLoading: true,
-        newKey: ''
+        title: '',
+        url: ''
       };
     }
-    case 'COPY_RES': {
+    case 'EXPORT_TEMPLATE_RES': {
       return {
         ...state,
         error: '',
         isComplete: true,
         isLoading: false,
-        newKey: action.newKey
+        title: action.title,
+        url: action.url
       };
     }
-    case 'COPY_ERR': {
+    case 'EXPORT_TEMPLATE_ERR': {
       return {
         ...state,
         error: action.error,
         isComplete: false,
         isLoading: false,
-        newKey: ''
+        title: '',
+        url: ''
       };
     }
     case 'RESET_TEMPLATE': {
@@ -57,4 +61,4 @@ function copyReducer(state = initialState, action) {
   }
 }
 
-export default copyReducer;
+export default exportReducer;

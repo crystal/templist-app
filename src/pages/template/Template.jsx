@@ -2,7 +2,9 @@ import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
+import resetTemplate from '../../actions/resetTemplate';
 import showModal from '../../actions/showModal';
 
 import Button from '../../components/button/Button';
@@ -17,7 +19,6 @@ class TemplatePage extends Component {
       auth: false,
       editMode: false,
       isLoading: true,
-      isComplete: false,
       isSubmitting: false,
 
       author: '',
@@ -28,19 +29,17 @@ class TemplatePage extends Component {
     };
   }
   componentWillMount() {
-    firebase.database()
-      .ref(`/templates/${this.props.router.params.listType}`)
-      .once('value')
-      .then(function getSnapshot(snapshot) {
-        const template = snapshot.val();
-        this.setState({
-          isLoading: false,
-          author: template.author,
-          description: template.description,
-          items: template.items,
-          title: template.title
-        });
-      }.bind(this));
+    this.loadTemplate();
+  }
+  componentWillUpdate(nextProps) {
+    if (nextProps.isSaved) {
+      this.props.push(`/templates/${nextProps.newKey}`);
+      this.props.resetTemplate();
+      this.loadTemplate();
+    }
+  }
+  componentWillUnmount() {
+    this.props.resetTemplate();
   }
   handleAuth() {
     const authenticationSuccess = () => {
@@ -72,32 +71,12 @@ class TemplatePage extends Component {
     this.handleExportSubmit();
   }
   handleExportSubmit() {
-    this.setState({
-      isSubmitting: true
+    this.props.showModal('export', {
+      author: this.props.uid,
+      description: this.state.description,
+      items: this.state.items,
+      title: this.state.title
     });
-
-    const newBoard = {
-      name: this.state.newTitle || this.state.title
-    };
-    Trello.post('/boards/', newBoard, function (board) {
-      Trello.get(`/boards/${board.id}/lists`, function (lists) {
-        const myList = lists[0].id;
-        this.state.items.forEach(function (itemText) {
-          const newCard = {
-            name: itemText,
-            // Place this card at the bottom of my list
-            idList: myList,
-            pos: 'bottom'
-          };
-          Trello.post('/cards/', newCard, function () {
-            this.setState({
-              isComplete: true,
-              isSubmitting: false
-            });
-          }.bind(this));
-        }.bind(this));
-      }.bind(this));
-    }.bind(this));
   }
   handleInput({ target: { name, value } }) {
     const items = this.state.items;
@@ -161,13 +140,33 @@ class TemplatePage extends Component {
       title: value
     });
   }
+  loadTemplate() {
+    firebase.database()
+      .ref(`/templates/${this.props.router.params.listType}`)
+      .once('value')
+      .then(function getSnapshot(snapshot) {
+        const template = snapshot.val();
+        this.setState({
+          isLoading: false,
+          author: template.author,
+          description: template.description,
+          items: template.items,
+          title: template.title
+        });
+      }.bind(this));
+  }
   render() {
-    if (this.state.isComplete) {
+    if (this.props.isExported) {
       return (
         <div>
           <section>
-            <h2>You are done!</h2>
-            <p>Good job on your new list: <b>{this.state.newTitle || this.state.title}</b></p>
+            <h2>All done!</h2>
+            <p>
+              You can view your new Trello board <b>{this.props.exportTitle}</b> here:
+            </p>
+            <p>
+              <a href={this.props.exportUrl} target="_blank">{this.props.exportUrl}</a>
+            </p>
           </section>
         </div>
       );
@@ -248,11 +247,16 @@ class TemplatePage extends Component {
           <ul className={styles.items}>
             {this.state.items.map((item, index) => {
               return (
-                <li>
+                <li key={`item-${index}`}>
                   {this.state.editMode && (
                     <div>
                       <input name={index} onChange={e => this.handleInput(e)} type="text" value={item} />
-                      <button className={styles.deleteButton} onClick={() => this.handleDelete(index)}>delete</button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => this.handleDelete(index)}
+                      >
+                        delete
+                      </button>
                     </div>
                   )}
                   {!this.state.editMode && (
@@ -270,14 +274,28 @@ class TemplatePage extends Component {
 }
 
 TemplatePage.defaultProps = {
+  exportTitle: '',
+  exportUrl: '',
+  isExported: false,
   isLoggedIn: false,
+  isSaved: false,
+  newKey: '',
+  push: () => {},
+  resetTemplate: () => {},
   router: {},
   showModal: () => {},
   uid: ''
 };
 
 TemplatePage.propTypes = {
+  exportTitle: PropTypes.string,
+  exportUrl: PropTypes.string,
+  isExported: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
+  isSaved: PropTypes.bool,
+  newKey: PropTypes.string,
+  push: PropTypes.func,
+  resetTemplate: PropTypes.func,
   router: PropTypes.object,
   showModal: PropTypes.func,
   uid: PropTypes.string
@@ -285,13 +303,24 @@ TemplatePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    exportTitle: state.export.title,
+    exportUrl: state.export.url,
+    isExported: state.export.isComplete,
+    isSaved: state.copy.isComplete,
     isLoggedIn: state.user.isLoggedIn,
+    newKey: state.copy.newKey,
     uid: state.user.uid
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    push: (url) => {
+      dispatch(push(url));
+    },
+    resetTemplate: () => {
+      dispatch(resetTemplate());
+    },
     showModal: (currentModal, data) => {
       dispatch(showModal(currentModal, data));
     }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -74,9 +75,9 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  email: React.PropTypes.func,
-  logout: React.PropTypes.func,
-  showModal: React.PropTypes.func
+  email: PropTypes.string,
+  logout: PropTypes.func,
+  showModal: PropTypes.func
 };
 
 function mapStateToProps(state) {

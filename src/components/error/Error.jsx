@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './Error.sass';
@@ -24,8 +25,8 @@ Error.defaultProps = {
 };
 
 Error.propTypes = {
-  children: React.PropTypes.string,
-  className: React.PropTypes.string
+  children: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default Error;

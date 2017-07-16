@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './Button.sass';
@@ -17,15 +18,15 @@ class Button extends React.Component {
 }
 
 Button.defaultProps = {
-  children: <span />,
+  children: '',
   className: '',
   onClick: () => {}
 };
 
 Button.propTypes = {
-  children: React.PropTypes.object,
-  className: React.PropTypes.string,
-  onClick: React.PropTypes.func
+  children: PropTypes.string,
+  className: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default Button;

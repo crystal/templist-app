@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -35,9 +36,9 @@ MainTemplate.defaultProps = {
 };
 
 MainTemplate.propTypes = {
-  autologin: React.PropTypes.function,
-  children: React.PropTypes.object,
-  currentModal: React.PropTypes.string
+  autologin: PropTypes.func,
+  children: PropTypes.object,
+  currentModal: PropTypes.string
 };
 
 function mapStateToProps(state) {

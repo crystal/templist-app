@@ -1,14 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
 
-import Button from '../button/Button';
-import Error from '../error/Error';
-import signup from '../../actions/signup';
+import Button from '../../components/button/Button';
+import Error from '../../components/error/Error';
 
-import styles from './SignupForm.sass';
+import login from '../../actions/login';
 
-class SignupForm extends React.Component {
+import styles from './LoginForm.sass';
+
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,14 +25,14 @@ class SignupForm extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.signup(this.state.email, this.state.password);
+    this.props.login(this.state.email, this.state.password);
   }
   render() {
     return (
-      <div className={styles.signup}>
+      <div className={styles.login}>
         <section>
-          <div className={styles.signup}>
-            <h2>Signup</h2>
+          <div className={styles.login}>
+            <h2>Login</h2>
             <Error>
               {this.props.error}
             </Error>
@@ -39,7 +41,7 @@ class SignupForm extends React.Component {
               <input name="email" onChange={e => this.handleInput(e)} type="text" value={this.state.email} />
               <label htmlFor="password">Password</label>
               <input name="password" onChange={e => this.handleInput(e)} type="password" value={this.state.password} />
-              <Button>Sign Up</Button>
+              <Button>{this.props.isLoading ? 'Loading...' : 'Login'}</Button>
             </form>
           </div>
         </section>
@@ -48,28 +50,31 @@ class SignupForm extends React.Component {
   }
 }
 
-SignupForm.defaultProps = {
+LoginForm.defaultProps = {
   error: '',
-  signup: () => {}
+  isLoading: false,
+  login: () => {}
 };
 
-SignupForm.propTypes = {
-  error: React.PropTypes.string,
-  signup: React.PropTypes.func
+LoginForm.propTypes = {
+  error: PropTypes.string,
+  isLoading: PropTypes.bool,
+  login: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    error: state.user.error
+    error: state.user.error,
+    isLoading: state.user.isLoading
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    signup: (email, password) => {
-      dispatch(signup(email, password));
+    login: (email, password) => {
+      dispatch(login(email, password));
     }
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

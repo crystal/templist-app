@@ -1,14 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
 
-import Button from '../button/Button';
-import Error from '../error/Error';
-import login from '../../actions/login';
+import Button from '../../components/button/Button';
+import Error from '../../components/error/Error';
 
-import styles from './LoginForm.sass';
+import signup from '../../actions/signup';
 
-class LoginForm extends React.Component {
+import styles from './SignupForm.sass';
+
+class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,14 +25,14 @@ class LoginForm extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    this.props.signup(this.state.email, this.state.password);
   }
   render() {
     return (
-      <div className={styles.login}>
+      <div className={styles.signup}>
         <section>
-          <div className={styles.login}>
-            <h2>Login</h2>
+          <div className={styles.signup}>
+            <h2>Signup</h2>
             <Error>
               {this.props.error}
             </Error>
@@ -39,7 +41,7 @@ class LoginForm extends React.Component {
               <input name="email" onChange={e => this.handleInput(e)} type="text" value={this.state.email} />
               <label htmlFor="password">Password</label>
               <input name="password" onChange={e => this.handleInput(e)} type="password" value={this.state.password} />
-              <Button>Login</Button>
+              <Button>Sign Up</Button>
             </form>
           </div>
         </section>
@@ -48,14 +50,14 @@ class LoginForm extends React.Component {
   }
 }
 
-LoginForm.defaultProps = {
+SignupForm.defaultProps = {
   error: '',
-  login: () => {}
+  signup: () => {}
 };
 
-LoginForm.propTypes = {
-  error: React.PropTypes.string,
-  login: React.PropTypes.func
+SignupForm.propTypes = {
+  error: PropTypes.string,
+  signup: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -66,10 +68,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: (email, password) => {
-      dispatch(login(email, password));
+    signup: (email, password) => {
+      dispatch(signup(email, password));
     }
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

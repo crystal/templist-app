@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { connect } from 'react-redux';
 
-import Button from '../button/Button';
-import Error from '../error/Error';
+import Button from '../../components/button/Button';
+import Error from '../../components/error/Error';
 
 import copy from '../../actions/copy';
 
@@ -65,12 +66,12 @@ CopyForm.defaultProps = {
 };
 
 CopyForm.propTypes = {
-  copy: React.PropTypes.func,
-  error: React.PropTypes.string,
-  originalTitle: React.PropTypes.string,
-  originalDescription: React.PropTypes.string,
-  originalItems: React.PropTypes.array,
-  uid: React.PropTypes.string
+  copy: PropTypes.func,
+  error: PropTypes.string,
+  originalTitle: PropTypes.string,
+  originalDescription: PropTypes.string,
+  originalItems: PropTypes.array,
+  uid: PropTypes.string
 };
 
 function mapStateToProps(state) {
