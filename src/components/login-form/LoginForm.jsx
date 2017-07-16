@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
+import Error from '../error/Error';
 import login from '../../actions/login';
 
 import styles from './LoginForm.sass';
@@ -30,6 +31,9 @@ class LoginForm extends React.Component {
         <section>
           <div className={styles.login}>
             <h2>Login</h2>
+            <Error>
+              {this.props.error}
+            </Error>
             <form onSubmit={e => this.handleSubmit(e)}>
               <label htmlFor="email">Email Address</label>
               <input name="email" onChange={e => this.handleInput(e)} type="text" value={this.state.email} />
@@ -45,12 +49,20 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.defaultProps = {
+  error: '',
   login: () => {}
 };
 
 LoginForm.propTypes = {
+  error: React.PropTypes.string,
   login: React.PropTypes.func
 };
+
+function mapStateToProps(state) {
+  return {
+    error: state.user.error
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -60,4 +72,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

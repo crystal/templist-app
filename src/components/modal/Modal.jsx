@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import hideModal from '../../actions/hideModal';
+
+import CopyForm from '../copy-form/CopyForm';
 import LoginForm from '../login-form/LoginForm';
 import SignupForm from '../signup-form/SignupForm';
 
@@ -15,6 +17,9 @@ class Modal extends React.Component {
         <button className={styles.bg} onClick={() => this.props.hideModal()} />
         <div className={styles.modal}>
           <button onClick={() => this.props.hideModal()}>Close</button>
+          {this.props.currentModal === 'copy' && (
+            <CopyForm />
+          )}
           {this.props.currentModal === 'login' && (
             <LoginForm />
           )}

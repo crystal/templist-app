@@ -123,17 +123,12 @@ class TemplatePage extends Component {
       this.props.showModal('login');
       return;
     }
-    firebase.database()
-      .ref('/templates')
-      .push({
-        author: this.props.uid,
-        description: this.state.description,
-        items: this.state.items,
-        title: this.state.title
-      })
-      .then(function getSnapshot(snapshot) {
-        console.log(snapshot);
-      }.bind(this));
+    this.props.showModal('copy', {
+      author: this.props.uid,
+      description: this.state.description,
+      items: this.state.items,
+      title: this.state.title
+    });
   }
   handleDelete(index) {
     // use splice to alter the array of items and return it
@@ -297,8 +292,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showModal: (currentModal) => {
-      dispatch(showModal(currentModal));
+    showModal: (currentModal, data) => {
+      dispatch(showModal(currentModal, data));
     }
   };
 }

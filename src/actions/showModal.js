@@ -1,7 +1,8 @@
-function showModal(currentModal) {
+function showModal(currentModal, data = {}) {
   return {
     type: 'SHOW_MODAL',
-    currentModal
+    currentModal,
+    data
   };
 }
 

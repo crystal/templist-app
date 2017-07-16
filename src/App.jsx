@@ -17,6 +17,7 @@ import MyFavoritesPage from './pages/my-favorites/MyFavorites';
 import MyTemplatesPage from './pages/my-templates/MyTemplates';
 import TemplatePage from './pages/template/Template';
 
+import copyReducer from './reducers/copy';
 import modalReducer from './reducers/modal';
 import userReducer from './reducers/user';
 
@@ -35,6 +36,7 @@ const router = routerMiddleware(browserHistory);
 
 const store = createStore(
   combineReducers({
+    copy: copyReducer,
     modal: modalReducer,
     routing: routerReducer,
     user: userReducer
