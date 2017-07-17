@@ -6,6 +6,8 @@ import { Link } from 'react-router';
 
 import IconButton from '../icon-button/IconButton';
 
+import listFavorites from '../../actions/listFavorites';
+
 import styles from './Tile.sass';
 
 class Tile extends Component {
@@ -23,7 +25,10 @@ class Tile extends Component {
         }
         firebase.database()
           .ref(`/users/${this.props.uid}/favorites`)
-          .set(favorites);
+          .set(favorites)
+          .then(function setFavorites() {
+            this.props.listFavorites(this.props.uid);
+          }.bind(this));
       }.bind(this));
   }
   render() {
@@ -67,6 +72,7 @@ Tile.defaultProps = {
   isFavorite: false,
   isLoading: false,
   items: [],
+  listFavorites: () => {},
   id: '',
   title: '',
   uid: '',
@@ -79,6 +85,7 @@ Tile.propTypes = {
   isFavorite: PropTypes.bool,
   items: [],
   id: PropTypes.string,
+  listFavorites: PropTypes.func,
   title: PropTypes.string,
   uid: PropTypes.string,
   url: PropTypes.string
@@ -91,4 +98,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Tile);
+function mapDispatchToProps(dispatch) {
+  return {
+    listFavorites: (uid) => {
+      dispatch(listFavorites(uid));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tile);

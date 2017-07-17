@@ -7,11 +7,19 @@ function autologin() {
     });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch({
-          type: 'LOGIN_RES',
-          email: user.email,
-          uid: user.uid
-        });
+        firebase.database()
+          .ref(`/users/${user.uid}`)
+          .once('value')
+          .then((snapshot) => {
+            const profile = snapshot.val() || {};
+            const favorites = profile.favorites || [];
+            dispatch({
+              type: 'LOGIN_RES',
+              email: user.email,
+              favorites,
+              uid: user.uid
+            });
+          });
       }
     });
   };

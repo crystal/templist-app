@@ -9,7 +9,10 @@ function exportTemplate(template) {
     Trello.post('/boards/', newBoard, (board) => {
       Trello.get(`/boards/${board.id}/lists`, (lists) => {
         const myList = lists[0].id;
-        template.items.forEach((itemText) => {
+
+        let i = 0;
+        function addItem() {
+          const itemText = template.items[i];
           const newCard = {
             name: itemText,
             // Place this card at the bottom of my list
@@ -17,13 +20,19 @@ function exportTemplate(template) {
             pos: 'bottom'
           };
           Trello.post('/cards/', newCard, () => {
-            dispatch({
-              type: 'EXPORT_TEMPLATE_RES',
-              title: newBoard.name,
-              url: board.url
-            });
+            if (i === template.items.length - 1) {
+              dispatch({
+                type: 'EXPORT_TEMPLATE_RES',
+                title: newBoard.name,
+                url: board.url
+              });
+            } else {
+              i += 1;
+              addItem();
+            }
           });
-        });
+        }
+        addItem();
       });
     });
   };

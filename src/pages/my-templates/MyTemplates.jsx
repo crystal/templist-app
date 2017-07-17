@@ -73,7 +73,7 @@ class MyTemplatesPage extends Component {
                 <Tile
                   id={template.key}
                   key={`my-templates-${template.key}`}
-                  isFavorite={template.isFavorite}
+                  isFavorite={this.props.favorites.includes(template.key)}
                   title={template.title}
                   description={template.description}
                   url={`templates/${template.key}`}
@@ -89,12 +89,14 @@ class MyTemplatesPage extends Component {
 }
 
 MyTemplatesPage.defaultProps = {
+  favorites: [],
   isLoggedIn: false,
   showModal: () => {},
   uid: ''
 };
 
 MyTemplatesPage.propTypes = {
+  favorites: PropTypes.array,
   isLoggedIn: PropTypes.bool,
   showModal: PropTypes.func,
   uid: PropTypes.string
@@ -102,6 +104,7 @@ MyTemplatesPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    favorites: state.user.favorites,
     isLoggedIn: state.user.isLoggedIn,
     uid: state.user.uid
   };

@@ -20,31 +20,22 @@ class MyFavoritesPage extends Component {
   }
   componentWillMount() {
     firebase.database()
-      .ref(`/users/${this.props.uid}`)
+      .ref('/templates')
       .once('value')
-      .then(function getFavoritesSnapshot(userSnapshot) {
-        const user = userSnapshot.val() || {};
-        const userObj = user[this.props.uid] || user || {};
-        const favorites = userObj.favorites || [];
-        firebase.database()
-          .ref('/templates')
-          .once('value')
-          .then(function getTemplatesSnapshot(templatesSnapshot) {
-            const templatesResponse = templatesSnapshot.val();
-            const templates = [];
-            Object.keys(templatesResponse).forEach((key) => {
-              const template = templatesResponse[key];
-              if (favorites.includes(key)) {
-                template.key = key;
-                template.isFavorite = favorites.includes(key);
-                templates.push(Object.assign(template, { key }));
-              }
-            });
-            this.setState({
-              isLoading: false,
-              templates
-            });
-          }.bind(this));
+      .then(function getTemplatesSnapshot(templatesSnapshot) {
+        const templatesResponse = templatesSnapshot.val();
+        const templates = [];
+        Object.keys(templatesResponse).forEach((key) => {
+          const template = templatesResponse[key];
+          if (this.props.favorites.includes(key)) {
+            template.key = key;
+            templates.push(Object.assign(template, { key }));
+          }
+        });
+        this.setState({
+          isLoading: false,
+          templates
+        });
       }.bind(this));
   }
   saveList(template) {
@@ -79,11 +70,14 @@ class MyFavoritesPage extends Component {
           <h2>My Favorites</h2>
           <Tiles>
             {this.state.templates.map((template) => {
+              if (!this.props.favorites.includes(template.key)) {
+                return null;
+              }
               return (
                 <Tile
                   id={template.key}
                   key={`my-favorites-${template.key}`}
-                  isFavorite={template.isFavorite}
+                  isFavorite
                   title={template.title}
                   description={template.description}
                   url={`templates/${template.key}`}
@@ -99,12 +93,14 @@ class MyFavoritesPage extends Component {
 }
 
 MyFavoritesPage.defaultProps = {
+  favorites: [],
   isLoggedIn: false,
   showModal: () => {},
   uid: ''
 };
 
 MyFavoritesPage.propTypes = {
+  favorites: PropTypes.array,
   isLoggedIn: PropTypes.bool,
   showModal: PropTypes.func,
   uid: PropTypes.string
@@ -113,6 +109,7 @@ MyFavoritesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    favorites: state.user.favorites,
     uid: state.user.uid
   };
 }

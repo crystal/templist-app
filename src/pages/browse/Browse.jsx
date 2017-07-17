@@ -21,32 +21,26 @@ class BrowsePage extends Component {
     };
   }
   componentWillMount() {
+    this.loadTemplates();
+  }
+  loadTemplates() {
     firebase.database()
-      .ref(`/users/${this.props.uid}`)
+      .ref('/templates')
       .once('value')
-      .then(function getSnapshot(userSnapshot) {
-        const user = userSnapshot.val() || {};
-        const userObj = user[this.props.uid] || user || {};
-        const favorites = userObj.favorites || [];
-        firebase.database()
-          .ref('/templates')
-          .once('value')
-          .then(function getTemplatesSnapshot(templatesSnapshot) {
-            const response = templatesSnapshot.val();
-            const templates = [];
-            Object.keys(response).forEach((key) => {
-              const template = response[key];
-              if (!template.author) {
-                template.key = key;
-                template.isFavorite = favorites.includes(key);
-                templates.push(Object.assign(template, { key }));
-              }
-            });
-            this.setState({
-              isLoading: false,
-              templates
-            });
-          }.bind(this));
+      .then(function getTemplatesSnapshot(templatesSnapshot) {
+        const response = templatesSnapshot.val();
+        const templates = [];
+        Object.keys(response).forEach((key) => {
+          const template = response[key];
+          if (!template.author) {
+            template.key = key;
+            templates.push(Object.assign(template, { key }));
+          }
+        });
+        this.setState({
+          isLoading: false,
+          templates
+        });
       }.bind(this));
   }
   saveList(template) {
@@ -109,7 +103,7 @@ class BrowsePage extends Component {
                 <Tile
                   id={template.key}
                   key={`browse-${template.key}`}
-                  isFavorite={template.isFavorite}
+                  isFavorite={this.props.favorites.includes(template.key)}
                   title={template.title}
                   description={template.description}
                   url={`templates/${template.key}`}
@@ -126,12 +120,14 @@ class BrowsePage extends Component {
 
 BrowsePage.defaultProps = {
   isLoggedIn: false,
+  favorites: [],
   showModal: () => {},
   uid: ''
 };
 
 BrowsePage.propTypes = {
   isLoggedIn: PropTypes.bool,
+  favorites: PropTypes.array,
   showModal: PropTypes.func,
   uid: PropTypes.string
 };
@@ -139,6 +135,7 @@ BrowsePage.propTypes = {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    favorites: state.user.favorites,
     uid: state.user.uid
   };
 }

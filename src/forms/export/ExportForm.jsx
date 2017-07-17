@@ -41,7 +41,9 @@ class ExportForm extends React.Component {
             <form onSubmit={e => this.handleSubmit(e)}>
               <label htmlFor="title">Title</label>
               <input name="title" onChange={e => this.handleInput(e)} type="text" value={this.state.title || this.props.originalTitle} />
-              <Button>Export</Button>
+              <Button disabled={this.props.isLoading}>
+                {this.props.isLoading ? 'Loading...' : 'Export'}
+              </Button>
             </form>
           </div>
         </section>
@@ -53,6 +55,7 @@ class ExportForm extends React.Component {
 ExportForm.defaultProps = {
   error: '',
   exportTemplate: () => {},
+  isLoading: false,
   originalTitle: '',
   originalItems: []
 };
@@ -60,6 +63,7 @@ ExportForm.defaultProps = {
 ExportForm.propTypes = {
   error: PropTypes.string,
   exportTemplate: PropTypes.func,
+  isLoading: PropTypes.bool,
   originalTitle: PropTypes.string,
   originalItems: PropTypes.array
 };
@@ -67,6 +71,7 @@ ExportForm.propTypes = {
 function mapStateToProps(state) {
   return {
     error: state.export.error,
+    isLoading: state.export.isLoading,
     originalTitle: state.export.originalTitle,
     originalItems: state.export.originalItems
   };

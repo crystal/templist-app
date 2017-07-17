@@ -1,6 +1,7 @@
 const initialState = {
   email: '',
   error: '',
+  favorites: [],
   isLoading: false,
   isLoggedIn: false,
   uid: ''
@@ -13,6 +14,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: '',
+        favorites: [],
         isLoading: true,
         isLoggedIn: false,
         uid: ''
@@ -23,6 +25,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: action.email,
         error: '',
+        favorites: action.favorites,
         isLoading: false,
         isLoggedIn: true,
         uid: action.uid
@@ -33,6 +36,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: action.error,
+        favorites: [],
         isLoading: false,
         isLoggedIn: false,
         uid: ''
@@ -43,6 +47,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: '',
+        favorites: [],
         isLoading: true,
         isLoggedIn: false,
         uid: ''
@@ -53,6 +58,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: '',
+        favorites: [],
         isLoading: false,
         isLoggedIn: false,
         uid: ''
@@ -63,6 +69,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: action.error,
+        favorites: [],
         isLoading: false,
         isLoggedIn: false,
         uid: ''
@@ -73,6 +80,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: '',
+        favorites: [],
         isLoading: true,
         isLoggedIn: false,
         uid: ''
@@ -83,6 +91,7 @@ function userReducer(state = initialState, action) {
         ...state,
         email: action.email,
         error: '',
+        favorites: [],
         isLoading: false,
         isLoggedIn: true,
         uid: action.uid
@@ -93,9 +102,16 @@ function userReducer(state = initialState, action) {
         ...state,
         email: '',
         error: action.error,
+        favorites: [],
         isLoading: false,
         isLoggedIn: false,
         uid: ''
+      };
+    }
+    case 'LIST_FAVORITES_RES': {
+      return {
+        ...state,
+        favorites: action.favorites
       };
     }
     default: {

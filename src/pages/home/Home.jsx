@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import Tile from '../../components/tile/Tile';
@@ -16,7 +18,6 @@ class HomePage extends React.Component {
           key: 'flight-trip',
           title: 'Flight Trip',
           description: 'The Air Travel Checklist',
-          isFavorite: true,
           items: [
             'Pack Clothing Bag',
             'Pack Electronics',
@@ -37,7 +38,6 @@ class HomePage extends React.Component {
           key: 'house-maintenance',
           title: 'House Maintenance',
           description: 'The Ultimate House Maintenance List',
-          isFavorite: true,
           items: [
             'Change Air Filters',
             'Sweep Floors',
@@ -58,7 +58,6 @@ class HomePage extends React.Component {
           key: 'house-guest2',
           title: 'House Guest',
           description: 'The Ultimate House Guest List',
-          isFavorite: true,
           items: [
             'Prepare Guest Room',
             'Prepare Guest Bathroom',
@@ -69,7 +68,6 @@ class HomePage extends React.Component {
           key: 'house-maintenance3',
           title: 'House Maintenance',
           description: 'The Ultimate House Maintenance List',
-          isFavorite: true,
           items: [
             'Change Air Filters',
             'Sweep Floors',
@@ -97,8 +95,9 @@ class HomePage extends React.Component {
               {this.state.tiles.map((tile) => {
                 return (
                   <Tile
+                    id={tile.key}
                     key={tile.key}
-                    isFavorite={tile.isFavorite}
+                    isFavorite={this.props.favorites.includes(tile.key)}
                     title={tile.title}
                     description={tile.description}
                     url={`templates/${tile.key}`}
@@ -114,4 +113,18 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+HomePage.defaultProps = {
+  favorites: []
+};
+
+HomePage.propTypes = {
+  favorites: PropTypes.array
+};
+
+function mapStateToProps(state) {
+  return {
+    favorites: state.user.favorites
+  };
+}
+
+export default connect(mapStateToProps)(HomePage);
