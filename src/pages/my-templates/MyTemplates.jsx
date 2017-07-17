@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import showModal from '../../actions/showModal';
 
+import Loader from '../../components/loader/Loader';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -58,7 +59,16 @@ class MyTemplatesPage extends Component {
       return (
         <div className={styles.templates}>
           <section>
-            Loading...
+            <Loader />
+          </section>
+        </div>
+      );
+    }
+    if (this.state.templates.length === 0) {
+      return (
+        <div className={styles.templates}>
+          <section>
+            To add to My Templates, go here: Browse
           </section>
         </div>
       );

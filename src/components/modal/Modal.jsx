@@ -19,7 +19,7 @@ class Modal extends React.Component {
       <div>
         <button className={styles.bg} onClick={() => this.props.hideModal()} />
         <div className={styles.modal}>
-          <button onClick={() => this.props.hideModal()}>Close</button>
+          <button onClick={() => this.props.hideModal()}>x</button>
           {this.props.currentModal === 'copy' && (
             <CopyForm />
           )}
