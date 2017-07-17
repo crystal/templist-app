@@ -9,7 +9,9 @@ import listFavorites from '../../actions/listFavorites';
 import resetTemplate from '../../actions/resetTemplate';
 import showModal from '../../actions/showModal';
 
+
 import Button from '../../components/button/Button';
+import Loader from '../../components/loader/Loader';
 import IconButton from '../../components/icon-button/IconButton';
 
 import styles from './Template.sass';
@@ -200,7 +202,9 @@ class TemplatePage extends Component {
     }
     if (this.props.isLoading) {
       return (
-        <div>Loading...</div>
+        <section>
+          <Loader />
+        </section>
       );
     }
     return (

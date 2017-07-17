@@ -7,6 +7,7 @@ import objectToArray from '../../lib/objectToArray';
 
 import showModal from '../../actions/showModal';
 
+import Loader from '../../components/loader/Loader';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -88,7 +89,7 @@ class BrowsePage extends Component {
       return (
         <div className={styles.templates}>
           <section>
-            Loading...
+            <Loader />
           </section>
         </div>
       );
