@@ -50,12 +50,16 @@ class Tile extends Component {
             {!this.props.isFavorite && (
               <IconButton className={styles.button} onClick={e => this.toggleFavorite(e)} type="heart-gray" />
             )}
-            <h3>{this.props.title}</h3>
-            <p>{this.props.description}</p>
+            <h3 title={this.props.title}>
+              {this.props.title}
+            </h3>
+            <p title={this.props.description}>
+              {this.props.description}
+            </p>
             <ul className={styles.items}>
-              {this.props.items.map((item) => {
+              {this.props.items.slice(0, 7).map((item) => {
                 return (
-                  <li>{item}</li>
+                  <li title={item}>{item}</li>
                 );
               })}
             </ul>
