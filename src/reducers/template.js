@@ -1,4 +1,5 @@
 const initialState = {
+  author: '',
   description: '',
   error: '',
   isLoading: false,
@@ -12,6 +13,7 @@ function exportReducer(state = initialState, action) {
     case 'GET_TEMPLATE_REQ': {
       return {
         ...state,
+        author: '',
         description: '',
         error: '',
         isLoading: true,
@@ -23,6 +25,7 @@ function exportReducer(state = initialState, action) {
     case 'GET_TEMPLATE_RES': {
       return {
         ...state,
+        author: action.author,
         description: action.description,
         error: '',
         isLoading: false,
@@ -34,6 +37,7 @@ function exportReducer(state = initialState, action) {
     case 'GET_TEMPLATE_ERR': {
       return {
         ...state,
+        author: '',
         description: '',
         error: action.error,
         isLoading: false,

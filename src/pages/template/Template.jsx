@@ -84,6 +84,11 @@ class TemplatePage extends Component {
     });
   }
   handleInput({ target: { name, value } }) {
+    this.setState({
+      [name]: value
+    });
+  }
+  handleItemInput({ target: { name, value } }) {
     const items = this.state.items;
     items[name] = value;
 
@@ -99,7 +104,8 @@ class TemplatePage extends Component {
       editMode = enabled;
     }
     this.setState({
-      editMode
+      editMode,
+      items: this.props.templateItems
     });
   }
   handleCopy() {
@@ -109,14 +115,21 @@ class TemplatePage extends Component {
     }
     this.props.showModal('copy', {
       author: this.props.uid,
-      description: this.state.description,
-      items: this.state.items,
-      title: this.state.title
+      description: this.props.templateDescription,
+      items: this.props.templateItems,
+      title: this.props.templateTitle
     });
   }
   handleDelete() {
     this.props.showModal('deleteTemplate', {
-      key: this.state.key
+      key: this.props.templateKey
+    });
+  }
+  handleDeleteItem(index) {
+    const items = this.state.items;
+    items.splice(index, 1);
+    this.setState({
+      items
     });
   }
   handleSave() {
@@ -128,12 +141,15 @@ class TemplatePage extends Component {
       .ref(`/templates/${this.props.router.params.listType}`)
       .set({
         author: this.props.uid,
-        description: this.state.description,
-        items: this.state.items,
-        title: this.state.title
+        description: this.state.description || this.props.templateDescription,
+        items: this.state.items || this.props.templateItems,
+        title: this.state.title || this.props.templateTitle
       })
       .then(function getSnapshot(snapshot) {
-        window.reload();
+        this.setState({
+          editMode: false
+        });
+        this.loadTemplate();
       }.bind(this));
   }
 
@@ -203,14 +219,11 @@ class TemplatePage extends Component {
                 >
                   save
                 </Button>
-                <Button className={styles.editButton} onClick={() => this.handleExport()}>
-                  {this.state.isSubmitting ? 'loading...' : 'export'}
-                </Button>
               </div>
             )}
             {!this.state.editMode && (
               <div>
-                {this.props.uid === this.state.author && (
+                {this.props.uid === this.props.templateAuthor && (
                   <span>
                     <IconButton
                       className={styles.editButton}
@@ -262,28 +275,45 @@ class TemplatePage extends Component {
           <h2>
             {this.state.editMode && (
               <input
-                onChange={e => this.handleTitleInput(e)}
-                value={this.state.newTitle || this.state.title}
+                name="title"
+                onChange={e => this.handleInput(e)}
+                value={this.state.title || this.props.templateTitle}
               />
             )}
             {!this.state.editMode && (
               <span>{this.props.templateTitle}</span>
             )}
           </h2>
-          <p>{this.props.templateDescription}</p>
+          <p>
+            {this.state.editMode && (
+              <input
+                name="description"
+                onChange={e => this.handleInput(e)}
+                value={this.state.description || this.props.templateDescription}
+              />
+            )}
+            {!this.state.editMode && (
+              <span>{this.props.templateDescription}</span>
+            )}
+          </p>
           <ul className={styles.items}>
             {this.props.templateItems.map((item, index) => {
               return (
                 <li key={`item-${index}`}>
                   {this.state.editMode && (
                     <div>
-                      <input name={index} onChange={e => this.handleInput(e)} type="text" value={item} />
-                      <button
+                      <input
+                        name={index}
+                        onChange={e => this.handleItemInput(e)}
+                        type="text"
+                        value={this.state.items[index] || item}
+                      />
+                      {/* <button
                         className={styles.deleteButton}
-                        onClick={() => this.handleDelete(index)}
+                        onClick={() => this.handleDeleteItem(index)}
                       >
                         delete
-                      </button>
+                      </button> */}
                     </div>
                   )}
                   {!this.state.editMode && (
