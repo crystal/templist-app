@@ -45,33 +45,33 @@ class HomePage extends React.Component {
           ]
         },
         {
-          key: 'flight-trip1',
-          title: 'Flight Trip',
-          description: 'The Air Travel Checklist',
+          key: 'road-trip',
+          title: 'Road Trip',
+          description: 'The Ultimate Road Trip List',
           items: [
-            'Pack Clothing Bag',
-            'Pack Electronics',
-            'Online Early Check-in'
+            'Change Oil',
+            'Check Tire Pressure',
+            'Check Battery'
           ]
         },
         {
-          key: 'house-guest2',
-          title: 'House Guest',
-          description: 'The Ultimate House Guest List',
+          key: 'pet-care',
+          title: 'Pet Care',
+          description: 'The Pet Care List',
           items: [
-            'Prepare Guest Room',
-            'Prepare Guest Bathroom',
-            'Prepare Guest Closet'
+            'Walk Dogs',
+            'Brush Teeth',
+            'Medication'
           ]
         },
         {
-          key: 'house-maintenance3',
-          title: 'House Maintenance',
-          description: 'The Ultimate House Maintenance List',
+          key: 'weekend-checklist',
+          title: 'Weekend Checklist',
+          description: 'The Weekend Warrior\'s Checklist',
           items: [
-            'Change Air Filters',
-            'Sweep Floors',
-            'Mop Floors'
+            'Clean House',
+            'Laundry',
+            'Grocery Shopping'
           ]
         }
       ]
@@ -90,7 +90,7 @@ class HomePage extends React.Component {
         </div>
         <div className={styles.top}>
           <section>
-            <h2>Top Templates</h2>
+            <h2>Most Popular Templates</h2>
             <Tiles>
               {this.state.tiles.map((tile) => {
                 return (

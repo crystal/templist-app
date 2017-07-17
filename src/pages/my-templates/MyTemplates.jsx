@@ -67,8 +67,8 @@ class MyTemplatesPage extends Component {
     if (this.state.templates.length === 0) {
       return (
         <div className={styles.templates}>
-          <section>
-            To add to My Templates, go here: Browse
+          <section className={styles.alert}>
+              No templates saved yet. Select templates to save <a href="/browse">here</a>.
           </section>
         </div>
       );

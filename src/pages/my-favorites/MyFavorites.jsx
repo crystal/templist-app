@@ -68,8 +68,8 @@ class MyFavoritesPage extends Component {
     if (this.state.templates.length === 0) {
       return (
         <div className={styles.templates}>
-          <section>
-            To add to My Favorites, Heart a list here: Browse
+          <section className={styles.alert}>
+            No favorites added yet. Select templates to add <a href="/browse">here</a>.
           </section>
         </div>
       );
