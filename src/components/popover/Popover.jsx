@@ -9,6 +9,7 @@ class Popover extends React.Component {
     return (
       <div
         className={classNames(styles.popover, this.props.className)}
+        onClick={this.props.onClick}
       >
         {this.props.children}
       </div>
@@ -18,12 +19,14 @@ class Popover extends React.Component {
 
 Popover.defaultProps = {
   children: <ul />,
-  className: ''
+  className: '',
+  onClick: () => {}
 };
 
 Popover.propTypes = {
   children: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default Popover;

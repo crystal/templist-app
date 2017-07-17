@@ -18,9 +18,9 @@ class Header extends React.Component {
       showPopover: false
     };
   }
-  togglePopover() {
+  togglePopover(show) {
     this.setState({
-      showPopover: !this.state.showPopover
+      showPopover: show !== undefined ? show : !this.state.showPopover
     });
   }
   render() {
@@ -67,7 +67,7 @@ class Header extends React.Component {
           </section>
         </div>
         {this.state.showPopover && (
-          <Popover>
+          <Popover onClick={() => this.togglePopover(false)}>
             <ul>
               <li>
                 <Link className={styles.link} to="my/templates">My Templates</Link>
