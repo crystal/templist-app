@@ -308,12 +308,12 @@ class TemplatePage extends Component {
                         type="text"
                         value={this.state.items[index] || item}
                       />
-                      {/* <button
+                      <IconButton
                         className={styles.deleteButton}
                         onClick={() => this.handleDeleteItem(index)}
-                      >
-                        delete
-                      </button> */}
+                        size="24"
+                        type="remove"
+                      />
                     </div>
                   )}
                   {!this.state.editMode && (
