@@ -31,7 +31,7 @@ class Header extends React.Component {
                 <Link className={styles.link} to="my/templates">My Templates</Link>
               </li>
               <li>
-                <Link className={styles.link} to="my/favorites">My Favorites</Link>
+                <Link className={styles.link} to="my/favorites">Favorites</Link>
               </li>
               <li>
                 <Link className={styles.link} to="profile">{this.props.email}</Link>

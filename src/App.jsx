@@ -21,6 +21,7 @@ import copyReducer from './reducers/copy';
 import deleteTemplateReducer from './reducers/deleteTemplate';
 import exportReducer from './reducers/export';
 import modalReducer from './reducers/modal';
+import templateReducer from './reducers/template';
 import userReducer from './reducers/user';
 
 import './App.sass';
@@ -43,6 +44,7 @@ const store = createStore(
     export: exportReducer,
     modal: modalReducer,
     routing: routerReducer,
+    template: templateReducer,
     user: userReducer
   }),
   applyMiddleware(

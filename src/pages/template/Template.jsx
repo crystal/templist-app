@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import getTemplate from '../../actions/getTemplate';
+import listFavorites from '../../actions/listFavorites';
 import resetTemplate from '../../actions/resetTemplate';
 import showModal from '../../actions/showModal';
 
@@ -141,21 +143,29 @@ class TemplatePage extends Component {
     });
   }
   loadTemplate() {
+    this.props.getTemplate(this.props.router.params.listType, this.props.uid);
+  }
+  toggleFavorite(e) {
+    e.preventDefault();
     firebase.database()
-      .ref(`/templates/${this.props.router.params.listType}`)
+      .ref(`/users/${this.props.uid}/favorites`)
       .once('value')
       .then(function getSnapshot(snapshot) {
-        const template = snapshot.val();
-        this.setState({
-          isLoading: false,
-          author: template.author,
-          description: template.description,
-          items: template.items,
-          key: this.props.router.params.listType,
-          title: template.title
-        });
+        const favorites = snapshot.val() || [];
+        if (!this.props.isFavorite && !favorites.includes(this.props.templateKey)) {
+          favorites.push(this.props.templateKey);
+        } else if (this.props.isFavorite && favorites.includes(this.props.templateKey)) {
+          favorites.splice(favorites.indexOf(this.props.templateKey), 1);
+        }
+        firebase.database()
+          .ref(`/users/${this.props.uid}/favorites`)
+          .set(favorites)
+          .then(function setFavorites() {
+            this.props.listFavorites(this.props.uid);
+          }.bind(this));
       }.bind(this));
   }
+
   render() {
     if (this.props.isExported) {
       return (
@@ -172,7 +182,7 @@ class TemplatePage extends Component {
         </div>
       );
     }
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return (
         <div>Loading...</div>
       );
@@ -220,6 +230,13 @@ class TemplatePage extends Component {
                 )}
                 <IconButton
                   className={styles.editButton}
+                  onClick={e => this.toggleFavorite(e)}
+                  size={32}
+                  title="favorite this list!"
+                  type={this.props.isFavorite ? 'heart' : 'heart-gray'}
+                />
+                <IconButton
+                  className={styles.editButton}
                   onClick={() => this.handleCopy()}
                   size={32}
                   title="copy this template!"
@@ -250,12 +267,12 @@ class TemplatePage extends Component {
               />
             )}
             {!this.state.editMode && (
-              <span>{this.state.title}</span>
+              <span>{this.props.templateTitle}</span>
             )}
           </h2>
-          <p>{this.state.description}</p>
+          <p>{this.props.templateDescription}</p>
           <ul className={styles.items}>
-            {this.state.items.map((item, index) => {
+            {this.props.templateItems.map((item, index) => {
               return (
                 <li key={`item-${index}`}>
                   {this.state.editMode && (
@@ -286,8 +303,12 @@ class TemplatePage extends Component {
 TemplatePage.defaultProps = {
   exportTitle: '',
   exportUrl: '',
+  getTemplate: () => {},
+  listFavorites: () => {},
   isDeleted: false,
   isExported: false,
+  isFavorite: false,
+  isLoading: false,
   isLoggedIn: false,
   isSaved: false,
   newKey: '',
@@ -295,21 +316,35 @@ TemplatePage.defaultProps = {
   resetTemplate: () => {},
   router: {},
   showModal: () => {},
+  templateAuthor: '',
+  templateDescription: '',
+  templateItems: [],
+  templateKey: '',
+  templateTitle: '',
   uid: ''
 };
 
 TemplatePage.propTypes = {
   exportTitle: PropTypes.string,
   exportUrl: PropTypes.string,
+  getTemplate: PropTypes.func,
   isDeleted: PropTypes.bool,
   isExported: PropTypes.bool,
+  isFavorite: PropTypes.bool,
+  isLoading: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
   isSaved: PropTypes.bool,
+  listFavorites: PropTypes.func,
   newKey: PropTypes.string,
   push: PropTypes.func,
   resetTemplate: PropTypes.func,
   router: PropTypes.object,
   showModal: PropTypes.func,
+  templateAuthor: PropTypes.string,
+  templateDescription: PropTypes.string,
+  templateItems: PropTypes.array,
+  templateKey: PropTypes.string,
+  templateTitle: PropTypes.string,
   uid: PropTypes.string
 };
 
@@ -319,15 +354,28 @@ function mapStateToProps(state) {
     exportUrl: state.export.url,
     isDeleted: state.deleteTemplate.isComplete,
     isExported: state.export.isComplete,
+    isFavorite: state.user.favorites.includes(state.template.key),
     isSaved: state.copy.isComplete,
+    isLoading: state.template.isLoading,
     isLoggedIn: state.user.isLoggedIn,
     newKey: state.copy.newKey,
+    templateAuthor: state.template.author,
+    templateDescription: state.template.description,
+    templateItems: state.template.items,
+    templateKey: state.template.key,
+    templateTitle: state.template.title,
     uid: state.user.uid
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getTemplate: (key) => {
+      dispatch(getTemplate(key));
+    },
+    listFavorites: (uid) => {
+      dispatch(listFavorites(uid));
+    },
     push: (url) => {
       dispatch(push(url));
     },
