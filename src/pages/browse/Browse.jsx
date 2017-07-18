@@ -33,7 +33,7 @@ class BrowsePage extends Component {
         const templates = [];
         Object.keys(response).forEach((key) => {
           const template = response[key];
-          if (!template.author) {
+          if (template.author === 'templists') {
             template.key = key;
             templates.push(Object.assign(template, { key }));
           }

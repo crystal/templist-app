@@ -8,7 +8,6 @@ const host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 3000;
 
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
-const buildFavIcons = process.env.FAVICON ? true : false;
 
 const config = {
   development: {
@@ -30,8 +29,12 @@ const app = env === 'production' ? [
 ];
 
 const plugins = [
+  new FaviconsWebpackPlugin({
+    logo: path.join(__dirname, 'src/favicon.png'),
+    prefix: 'images/favicons/'
+  }),
   new HtmlWebpackPlugin({
-    title: 'Templists | To-Do Templates',
+    title: 'TempLists | To-Do Templates',
     template: 'index.hbs'
   }),
   new webpack.DefinePlugin({
@@ -43,14 +46,6 @@ const plugins = [
     { from: 'images', to: 'images' }
   ])
 ];
-if (buildFavIcons) {
-  plugins.push(
-    new FaviconsWebpackPlugin({
-      logo: path.join(__dirname, 'src/favicon.png'),
-      prefix: 'images/favicons/'
-    })
-  );
-}
 if (env === 'production') {
   plugins.push(
     new webpack.DefinePlugin({
