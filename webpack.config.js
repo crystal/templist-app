@@ -14,7 +14,7 @@ const config = {
     outputPath: 'tmp'
   },
   production: {
-    baseHref: '/templist/',
+    baseHref: '/templist-app/',
     outputPath: 'docs'
   }
 };
