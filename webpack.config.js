@@ -20,7 +20,9 @@ const config = {
 };
 const { baseHref, outputPath } = config[env];
 
-const app = [
+const app = env === 'production' ? [
+  './App.jsx'
+] : [
   `webpack-dev-server/client?http://${host}:${port}`,
   './App.jsx'
 ];
