@@ -1,5 +1,6 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HandlebarsWebpackPlugin = require('handlebars-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -7,6 +8,7 @@ const host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 3000;
 
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const buildFavIcons = process.env.FAVICON ? true : false;
 
 const config = {
   development: {
@@ -14,7 +16,7 @@ const config = {
     outputPath: 'tmp'
   },
   production: {
-    baseHref: '/templist-app/',
+    baseHref: '/',
     outputPath: 'docs'
   }
 };
@@ -28,6 +30,10 @@ const app = env === 'production' ? [
 ];
 
 const plugins = [
+  new HtmlWebpackPlugin({
+    title: 'Templists | To-Do Templates',
+    template: 'index.hbs'
+  }),
   new webpack.DefinePlugin({
     CONFIG: JSON.stringify({
       baseHref
@@ -35,15 +41,16 @@ const plugins = [
   }),
   new CopyWebpackPlugin([
     { from: 'images', to: 'images' }
-  ]),
-  new HandlebarsWebpackPlugin({
-    entry: path.join(process.cwd(), 'src', '*.hbs'),
-    output: path.join(process.cwd(), outputPath, '[name].html'),
-    data: {
-      baseHref
-    }
-  })
+  ])
 ];
+if (buildFavIcons) {
+  plugins.push(
+    new FaviconsWebpackPlugin({
+      logo: path.join(__dirname, 'src/favicon.png'),
+      prefix: 'images/favicons/'
+    })
+  );
+}
 if (env === 'production') {
   plugins.push(
     new webpack.DefinePlugin({
@@ -100,6 +107,10 @@ module.exports = {
             'stage-0'
           ]
         }
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader'
       },
       {
         test: /\.sass$/,

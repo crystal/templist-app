@@ -62,7 +62,7 @@ class Header extends React.Component {
             <div className={styles.headerLogo}>
               <h1>
                 <Link className={styles.link} to="/">
-                  TempList
+                  TempLists
                 </Link>
               </h1>
             </div>
