@@ -12,6 +12,7 @@ import showModal from '../../actions/showModal';
 
 import Button from '../../components/button/Button';
 import Loader from '../../components/loader/Loader';
+import Tile from '../../components/tile/Tile';
 import IconButton from '../../components/icon-button/IconButton';
 
 import styles from './Template.sass';

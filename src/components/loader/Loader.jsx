@@ -10,7 +10,7 @@ class Loader extends React.Component {
       <div
         className={classNames(styles.loader, this.props.className)}
       >
-        <img alt="Loading..." src="images/icons/loader.gif" />
+        <img alt="Loading..." src="images/icons/loader2.gif" />
       </div>
     );
   }
