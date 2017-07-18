@@ -83,6 +83,7 @@ class HomePage extends React.Component {
         <div className={styles.featured}>
           <section>
             <Link to="templates/flight-trip">
+              <h3>Most Popular!</h3>
               <h2>Flight Trip</h2>
               <p>The air travel checklist.</p>
             </Link>
@@ -90,7 +91,7 @@ class HomePage extends React.Component {
         </div>
         <div className={styles.top}>
           <section>
-            <h2>Most Popular Templates</h2>
+            <h2>Popular Templates</h2>
             <Tiles>
               {this.state.tiles.map((tile) => {
                 return (

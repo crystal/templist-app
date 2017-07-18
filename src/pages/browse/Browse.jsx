@@ -97,7 +97,7 @@ class BrowsePage extends Component {
     return (
       <div className={styles.templates}>
         <section>
-          <h2>Browse</h2>
+          <h2>Browse Templates</h2>
           <Tiles>
             {this.state.templates.map((template) => {
               return (

@@ -30,11 +30,11 @@ class Header extends React.Component {
           <section>
             <ul className={styles.menu}>
               <li>
-                <Link className={styles.link} to="browse">Browse</Link>
+                <Link className={styles.link} to="browse">Browse Templates</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link className={styles.link} to="about">About</Link>
-              </li>
+              </li> */}
             </ul>
             {this.props.email && (
               <ul className={styles.account}>
@@ -61,7 +61,9 @@ class Header extends React.Component {
             )}
             <div className={styles.headerLogo}>
               <h1>
-                <Link className={styles.link} to="/">TL</Link>
+                <Link className={styles.link} to="/">
+                  TempList
+                </Link>
               </h1>
             </div>
           </section>

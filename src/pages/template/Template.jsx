@@ -81,9 +81,9 @@ class TemplatePage extends Component {
   handleExportSubmit() {
     this.props.showModal('export', {
       author: this.props.uid,
-      description: this.state.description,
-      items: this.state.items,
-      title: this.state.title
+      description: this.props.templateDescription,
+      items: this.props.templateItems,
+      title: this.props.templateTitle
     });
   }
   handleInput({ target: { name, value } }) {
@@ -260,13 +260,13 @@ class TemplatePage extends Component {
                   title="copy this template!"
                   type="layer"
                 />
-                <IconButton
+                {/* <IconButton
                   className={styles.editButton}
                   onClick={() => this.handleShare()}
                   size={32}
                   title="share this template!"
                   type="share"
-                />
+                /> */}
                 <IconButton
                   className={styles.editButton}
                   onClick={() => this.handleExport()}
