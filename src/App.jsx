@@ -65,7 +65,7 @@ render(
         window.scrollTo(0, 0);
       }}
     >
-      <Route path="/" component={MainTemplate}>
+      <Route path={CONFIG.baseHref} component={MainTemplate}>
         <IndexRoute component={HomePage} />
         <Route path="about" component={AboutPage} />
         <Route path="browse" component={BrowsePage} />
