@@ -27,11 +27,12 @@ With TempLists, users can combine their lists to make collections, and export th
 
 ### Technologies Used
 <img src="src/images/Tech.png" />
+
 - Node.js
 - SASS
 - ReactJS
 - Redux
-- Firebase (backend authentication and data storage)
+- Firebase
 - Docker
 - Webpack
 - Babel
