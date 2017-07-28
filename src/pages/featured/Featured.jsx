@@ -7,9 +7,9 @@ import { Link } from 'react-router';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
-import styles from './Home.sass';
+import styles from './Featured.sass';
 
-class HomePage extends React.Component {
+class FeaturedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,7 +83,9 @@ class HomePage extends React.Component {
         <div className={styles.featured}>
           <section>
             <Link to="templates/flight-trip">
-              <h2>To-do list templates</h2>
+              <h3>Most Popular!</h3>
+              <h2>Flight Trip</h2>
+              <p>The air travel checklist.</p>
             </Link>
           </section>
         </div>
@@ -112,11 +114,11 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.defaultProps = {
+FeaturedPage.defaultProps = {
   favorites: []
 };
 
-HomePage.propTypes = {
+FeaturedPage.propTypes = {
   favorites: PropTypes.array
 };
 
@@ -126,4 +128,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(FeaturedPage);

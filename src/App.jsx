@@ -12,6 +12,7 @@ import MainTemplate from './templates/main/Main';
 
 import AboutPage from './pages/about/About';
 import BrowsePage from './pages/browse/Browse';
+import FeaturedPage from './pages/featured/Featured';
 import HomePage from './pages/home/Home';
 import MyFavoritesPage from './pages/my-favorites/MyFavorites';
 import MyTemplatesPage from './pages/my-templates/MyTemplates';
@@ -69,6 +70,7 @@ render(
         <IndexRoute component={HomePage} />
         <Route path="about" component={AboutPage} />
         <Route path="browse" component={BrowsePage} />
+        <Route path="featured" component={FeaturedPage} />
         <Route path="my/favorites" component={MyFavoritesPage} />
         <Route path="my/templates" component={MyTemplatesPage} />
         <Route path="templates/:listType" component={TemplatePage} />

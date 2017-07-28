@@ -30,11 +30,17 @@ class Header extends React.Component {
           <section>
             <ul className={styles.menu}>
               <li>
-                <Link className={styles.link} to="browse">Browse Templates</Link>
+                <Link className={styles.link} to="/">Home</Link>
               </li>
-              {/* <li>
+              <li>
+                <Link className={styles.link} to="browse">Browse</Link>
+              </li>
+              <li>
                 <Link className={styles.link} to="about">About</Link>
-              </li> */}
+              </li>
+              <li>
+                <Link className={styles.link} to="featured">Featured</Link>
+              </li>
             </ul>
             {this.props.email && (
               <ul className={styles.account}>
