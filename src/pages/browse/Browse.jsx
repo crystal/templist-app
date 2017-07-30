@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import objectToArray from '../../lib/objectToArray';
 
+import selectMenuItem from '../../actions/selectMenuItem';
 import showModal from '../../actions/showModal';
 
 import Loader from '../../components/loader/Loader';
@@ -22,6 +23,7 @@ class BrowsePage extends Component {
     };
   }
   componentWillMount() {
+    this.props.selectMenuItem('browse');
     this.loadTemplates();
   }
   loadTemplates() {
@@ -47,7 +49,7 @@ class BrowsePage extends Component {
   saveList(template) {
     if (!this.props.isLoggedIn) {
       this.props.showModal('login');
-      return
+      return;
     }
     const userId = 'testuser';
     firebase.database()
@@ -122,6 +124,7 @@ class BrowsePage extends Component {
 BrowsePage.defaultProps = {
   isLoggedIn: false,
   favorites: [],
+  selectMenuItem: () => {},
   showModal: () => {},
   uid: ''
 };
@@ -129,6 +132,7 @@ BrowsePage.defaultProps = {
 BrowsePage.propTypes = {
   isLoggedIn: PropTypes.bool,
   favorites: PropTypes.array,
+  selectMenuItem: PropTypes.func,
   showModal: PropTypes.func,
   uid: PropTypes.string
 };
@@ -143,6 +147,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
+    },
     showModal: (currentModal) => {
       dispatch(showModal(currentModal));
     }

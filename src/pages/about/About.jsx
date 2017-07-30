@@ -1,8 +1,15 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import selectMenuItem from '../../actions/selectMenuItem';
 
 import styles from './About.sass';
 
-class AboutPage extends React.Component {
+class AboutPage extends Component {
+  componentWillMount() {
+    this.props.selectMenuItem('about');
+  }
   render() {
     return (
       <div className={styles.about}>
@@ -17,4 +24,20 @@ class AboutPage extends React.Component {
   }
 }
 
-export default AboutPage;
+AboutPage.defaultProps = {
+  selectMenuItem: () => {}
+};
+
+AboutPage.propTypes = {
+  selectMenuItem: PropTypes.func
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
+    }
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AboutPage);

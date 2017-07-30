@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -30,16 +31,36 @@ class Header extends React.Component {
           <section>
             <ul className={styles.menu}>
               <li>
-                <Link className={styles.link} to="/">Home</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'home' ? styles.selected : null)}
+                  to="/"
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link className={styles.link} to="browse">Browse</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'featured' ? styles.selected : null)}
+                  to="featured"
+                >
+                  Featured
+                </Link>
               </li>
               <li>
-                <Link className={styles.link} to="about">About</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'browse' ? styles.selected : null)}
+                  to="browse"
+                >
+                  Browse
+                </Link>
               </li>
               <li>
-                <Link className={styles.link} to="featured">Featured</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'about' ? styles.selected : null)}
+                  to="about"
+                >
+                  About
+                </Link>
               </li>
             </ul>
             {this.props.email && (
@@ -99,18 +120,21 @@ class Header extends React.Component {
 Header.defaultProps = {
   email: '',
   logout: () => {},
+  selectedMenuItem: '',
   showModal: () => {}
 };
 
 Header.propTypes = {
   email: PropTypes.string,
   logout: PropTypes.func,
+  selectedMenuItem: PropTypes.string,
   showModal: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    email: state.user.email
+    email: state.user.email,
+    selectedMenuItem: state.menu.selected
   };
 }
 

@@ -4,6 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+import selectMenuItem from '../../actions/selectMenuItem';
+
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -77,13 +79,17 @@ class HomePage extends React.Component {
       ]
     };
   }
+  componentWillMount() {
+    this.props.selectMenuItem('home');
+  }
   render() {
     return (
       <div className={styles.home}>
         <div className={styles.featured}>
           <section>
             <Link to="templates/flight-trip">
-              <h2>To-do list templates</h2>
+              <h2>To-Do List Templates</h2>
+              <h3>for any occassion.</h3>
             </Link>
           </section>
         </div>
@@ -113,11 +119,13 @@ class HomePage extends React.Component {
 }
 
 HomePage.defaultProps = {
-  favorites: []
+  favorites: [],
+  selectMenuItem: () => {}
 };
 
 HomePage.propTypes = {
-  favorites: PropTypes.array
+  favorites: PropTypes.array,
+  selectMenuItem: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -126,4 +134,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(HomePage);
+function mapDispatchToProps(dispatch) {
+  return {
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

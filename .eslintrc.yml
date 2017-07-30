@@ -8,6 +8,7 @@ rules:
   comma-dangle:
     - error
     - never
+  jsx-a11y/href-no-hash: off
   react/forbid-prop-types:
     - off
   react/prefer-stateless-function:

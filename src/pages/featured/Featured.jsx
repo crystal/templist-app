@@ -4,6 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+import selectMenuItem from '../../actions/selectMenuItem';
+
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -77,6 +79,9 @@ class FeaturedPage extends React.Component {
       ]
     };
   }
+  componentWillMount() {
+    this.props.selectMenuItem('featured');
+  }
   render() {
     return (
       <div className={styles.home}>
@@ -115,11 +120,13 @@ class FeaturedPage extends React.Component {
 }
 
 FeaturedPage.defaultProps = {
-  favorites: []
+  favorites: [],
+  selectMenuItem: () => {}
 };
 
 FeaturedPage.propTypes = {
-  favorites: PropTypes.array
+  favorites: PropTypes.array,
+  selectMenuItem: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -128,4 +135,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(FeaturedPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeaturedPage);
