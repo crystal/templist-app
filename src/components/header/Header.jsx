@@ -99,10 +99,20 @@ class Header extends React.Component {
           <Popover onClick={() => this.togglePopover(false)}>
             <ul>
               <li>
-                <Link className={styles.link} to="my/templates">My Templates</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'myTemplates' ? styles.selected : null)}
+                  to="my/templates"
+                >
+                  My Templates
+                </Link>
               </li>
               <li>
-                <Link className={styles.link} to="my/favorites">Favorites</Link>
+                <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'myFavorites' ? styles.selected : null)}
+                  to="my/favorites"
+                >
+                  Favorites
+                </Link>
               </li>
               <li>
                 <button className={styles.link} onClick={() => this.props.logout()}>

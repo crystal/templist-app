@@ -7,6 +7,7 @@ import { push } from 'react-router-redux';
 import getTemplate from '../../actions/getTemplate';
 import listFavorites from '../../actions/listFavorites';
 import resetTemplate from '../../actions/resetTemplate';
+import selectMenuItem from '../../actions/selectMenuItem';
 import showModal from '../../actions/showModal';
 
 
@@ -35,6 +36,7 @@ class TemplatePage extends Component {
     };
   }
   componentWillMount() {
+    this.props.selectMenuItem('');
     this.loadTemplate();
   }
   componentWillUpdate(nextProps) {
@@ -350,6 +352,7 @@ TemplatePage.defaultProps = {
   push: () => {},
   resetTemplate: () => {},
   router: {},
+  selectMenuItem: () => {},
   showModal: () => {},
   templateAuthor: '',
   templateDescription: '',
@@ -374,6 +377,7 @@ TemplatePage.propTypes = {
   push: PropTypes.func,
   resetTemplate: PropTypes.func,
   router: PropTypes.object,
+  selectMenuItem: PropTypes.func,
   showModal: PropTypes.func,
   templateAuthor: PropTypes.string,
   templateDescription: PropTypes.string,
@@ -416,6 +420,9 @@ function mapDispatchToProps(dispatch) {
     },
     resetTemplate: () => {
       dispatch(resetTemplate());
+    },
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
     },
     showModal: (currentModal, data) => {
       dispatch(showModal(currentModal, data));

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import selectMenuItem from '../../actions/selectMenuItem';
 import showModal from '../../actions/showModal';
 
 import Loader from '../../components/loader/Loader';
@@ -20,6 +21,7 @@ class MyFavoritesPage extends Component {
     };
   }
   componentWillMount() {
+    this.props.selectMenuItem('myFavorites');
     firebase.database()
       .ref('/templates')
       .once('value')
@@ -105,6 +107,7 @@ class MyFavoritesPage extends Component {
 MyFavoritesPage.defaultProps = {
   favorites: [],
   isLoggedIn: false,
+  selectMenuItem: () => {},
   showModal: () => {},
   uid: ''
 };
@@ -112,6 +115,7 @@ MyFavoritesPage.defaultProps = {
 MyFavoritesPage.propTypes = {
   favorites: PropTypes.array,
   isLoggedIn: PropTypes.bool,
+  selectMenuItem: PropTypes.func,
   showModal: PropTypes.func,
   uid: PropTypes.string
 };
@@ -126,6 +130,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
+    },
     showModal: (currentModal) => {
       dispatch(showModal(currentModal));
     }
