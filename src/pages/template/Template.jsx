@@ -30,6 +30,7 @@ class TemplatePage extends Component {
       description: '',
       key: '',
       newTitle: '',
+      newValue: '',
       items: [],
       title: ''
     };
@@ -98,6 +99,19 @@ class TemplatePage extends Component {
 
     this.setState({
       items
+    });
+  }
+  handleNewInput({ target: { value } }) {
+    this.setState({
+      newValue: value
+    });
+  }
+  handleNewSubmit() {
+    const items = this.state.items;
+    items.push(this.state.newValue);
+    this.setState({
+      items,
+      newValue: ''
     });
   }
   toggleEditMode(enabled) {
@@ -335,7 +349,7 @@ class TemplatePage extends Component {
                       <IconButton
                         className={styles.deleteButton}
                         onClick={() => this.handleDeleteItem(index)}
-                        size="24"
+                        size={24}
                         type="remove"
                       />
                     </div>
@@ -346,6 +360,22 @@ class TemplatePage extends Component {
                 </li>
               );
             })}
+            {this.state.editMode && (
+              <li>
+                <input
+                  onChange={e => this.handleNewInput(e)}
+                  placeholder="Add an item to this list..."
+                  type="text"
+                  value={this.state.newValue}
+                />
+                <IconButton
+                  className={styles.deleteButton}
+                  onClick={() => this.handleNewSubmit()}
+                  size={24}
+                  type="add"
+                />
+              </li>
+            )}
           </ul>
           <div className={styles.margin} />
         </section>
