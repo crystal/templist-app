@@ -21,6 +21,7 @@ import TemplatePage from './pages/template/Template';
 import copyReducer from './reducers/copy';
 import deleteTemplateReducer from './reducers/deleteTemplate';
 import exportReducer from './reducers/export';
+import hintReducer from './reducers/hint';
 import menuReducer from './reducers/menu';
 import modalReducer from './reducers/modal';
 import templateReducer from './reducers/template';
@@ -44,6 +45,7 @@ const store = createStore(
     copy: copyReducer,
     deleteTemplate: deleteTemplateReducer,
     export: exportReducer,
+    hint: hintReducer,
     menu: menuReducer,
     modal: modalReducer,
     routing: routerReducer,

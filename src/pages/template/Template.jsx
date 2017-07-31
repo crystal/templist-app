@@ -10,7 +10,6 @@ import resetTemplate from '../../actions/resetTemplate';
 import selectMenuItem from '../../actions/selectMenuItem';
 import showModal from '../../actions/showModal';
 
-
 import Button from '../../components/button/Button';
 import Loader from '../../components/loader/Loader';
 import Tile from '../../components/tile/Tile';
@@ -250,6 +249,12 @@ class TemplatePage extends Component {
                 )}
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Favorite this template!</h6>
+                      <p>Add this template to your favorites.</p>
+                    </div>
+                  )}
                   onClick={e => this.toggleFavorite(e)}
                   size={32}
                   title="favorite this list!"
@@ -257,6 +262,12 @@ class TemplatePage extends Component {
                 />
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Copy this template!</h6>
+                      <p>Duplicate this template and make it your own.</p>
+                    </div>
+                  )}
                   onClick={() => this.handleCopy()}
                   size={32}
                   title="copy this template!"
@@ -271,6 +282,12 @@ class TemplatePage extends Component {
                 /> */}
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Export this template!</h6>
+                      <p>Send this template to Trello.</p>
+                    </div>
+                  )}
                   onClick={() => this.handleExport()}
                   size={32}
                   title="export this template!"
