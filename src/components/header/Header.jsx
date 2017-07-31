@@ -100,6 +100,14 @@ class Header extends React.Component {
             <ul>
               <li>
                 <Link
+                  className={classNames(styles.link, this.props.selectedMenuItem === 'newTemplate' ? styles.selected : null)}
+                  to="my/templates/new"
+                >
+                  Create a New Template
+                </Link>
+              </li>
+              <li>
+                <Link
                   className={classNames(styles.link, this.props.selectedMenuItem === 'myTemplates' ? styles.selected : null)}
                   to="my/templates"
                 >

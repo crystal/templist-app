@@ -77,6 +77,7 @@ render(
         <Route path="featured" component={FeaturedPage} />
         <Route path="my/favorites" component={MyFavoritesPage} />
         <Route path="my/templates" component={MyTemplatesPage} />
+        <Route path="my/templates/new" component={TemplatePage} />
         <Route path="templates/:listType" component={TemplatePage} />
       </Route>
     </Router>

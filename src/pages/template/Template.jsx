@@ -24,6 +24,7 @@ class TemplatePage extends Component {
       auth: false,
       editMode: false,
       isLoading: true,
+      isNew: false,
       isSubmitting: false,
 
       author: '',
@@ -36,6 +37,14 @@ class TemplatePage extends Component {
     };
   }
   componentWillMount() {
+    if (location.pathname === '/my/templates/new') {
+      this.props.selectMenuItem('newTemplate');
+      this.toggleEditMode(true);
+      this.setState({
+        isNew: true
+      });
+      return;
+    }
     this.props.selectMenuItem('');
     this.loadTemplate();
   }
@@ -109,6 +118,7 @@ class TemplatePage extends Component {
   handleNewSubmit() {
     const items = this.state.items;
     items.push(this.state.newValue);
+    console.log(items);
     this.setState({
       items,
       newValue: ''
@@ -151,8 +161,26 @@ class TemplatePage extends Component {
     });
   }
   handleSave() {
+    console.log('save 1');
     if (!this.props.isLoggedIn) {
       this.props.showModal('login');
+      return;
+    }
+    const templateObject = {
+      author: this.props.uid,
+      description: this.state.description || this.props.templateDescription,
+      items: this.state.items || this.props.templateItems,
+      title: this.state.title || this.props.templateTitle
+    };
+    console.log(templateObject);
+    if (this.state.isNew) {
+      firebase.database()
+        .ref('/templates')
+        .push(templateObject)
+        .then(function getSnapshot(snapshot) {
+          const newKey = snapshot.key;
+          location.href = `/templates/${newKey}`;
+        });
       return;
     }
     firebase.database()
@@ -315,6 +343,7 @@ class TemplatePage extends Component {
               <input
                 name="title"
                 onChange={e => this.handleInput(e)}
+                placeholder="Add a Title"
                 value={this.state.title || this.props.templateTitle}
               />
             )}
@@ -327,6 +356,7 @@ class TemplatePage extends Component {
               <input
                 name="description"
                 onChange={e => this.handleInput(e)}
+                placeholder="Add a Description"
                 value={this.state.description || this.props.templateDescription}
               />
             )}
