@@ -17,14 +17,21 @@ class IconButton extends React.Component {
         onMouseDown={() => this.props.hideHint()}
         onMouseEnter={event => this.props.showHint(this.props.hint, event.target)}
         onMouseLeave={() => this.props.hideHint()}
-        style={{
-          backgroundImage: `url(images/icons/${this.props.type}.svg)`,
-          height: this.props.size,
-          width: this.props.size
-        }}
         // title={this.props.title}
       >
-        {this.props.children}
+        <span
+          className={styles.icon}
+          style={{
+            backgroundImage: `url(images/icons/${this.props.type}.svg)`,
+            height: this.props.size,
+            width: this.props.size
+          }}
+        >
+          {this.props.children}
+        </span>
+        <span className={styles.text}>
+          {this.props.text}
+        </span>
       </button>
     );
   }
@@ -38,6 +45,7 @@ IconButton.defaultProps = {
   onClick: () => {},
   showHint: () => {},
   size: 16,
+  text: '',
   title: '',
   type: ''
 };
@@ -54,6 +62,7 @@ IconButton.propTypes = {
   onClick: PropTypes.func,
   showHint: PropTypes.func,
   size: PropTypes.number,
+  text: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string
 };

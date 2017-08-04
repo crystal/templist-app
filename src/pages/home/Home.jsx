@@ -7,7 +7,6 @@ import { Link } from 'react-router';
 import selectMenuItem from '../../actions/selectMenuItem';
 
 import Banner from '../../components/banner/Banner';
-import FeaturedTile from '../../components/featured-title/FeaturedTile';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -135,27 +134,6 @@ class HomePage extends React.Component {
           buttonUrl="browse"
           graphic="templates"
         />
-        {/* <div className={styles.top}>
-          <section>
-            <h2>Featured Templates</h2>
-            <Tiles>
-              {this.state.tiles.map((tile) => {
-                return (
-                  <FeaturedTile
-                    id={tile.key}
-                    key={tile.key}
-                    isFavorite={this.props.favorites.includes(tile.key)}
-                    title={tile.title}
-                    description={tile.description}
-                    url={`templates/${tile.key}`}
-                    items={tile.items}
-                    graphic="pet"
-                  />
-                );
-              })}
-            </Tiles>
-          </section>
-        </div> */}
         <div className={styles.top}>
           <section>
             <h2>Popular Templates</h2>

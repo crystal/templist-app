@@ -59,7 +59,7 @@ class Header extends React.Component {
               <ul className={styles.account}>
                 <li>
                   <button className={styles.link} onClick={() => this.togglePopover()}>
-                    Welcome back, {this.props.email}
+                    Hi, {this.props.email}
                   </button>
                 </li>
               </ul>

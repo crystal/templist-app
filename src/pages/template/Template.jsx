@@ -253,6 +253,7 @@ class TemplatePage extends Component {
     }
     return (
       <div className={styles.template}>
+        <div className={styles.background} />
         <section>
           <div className={styles.buttons}>
             {this.state.editMode && (
@@ -275,15 +276,27 @@ class TemplatePage extends Component {
                   <span>
                     <IconButton
                       className={styles.editButton}
+                      hint={(
+                        <div>
+                          <h6>Edit this template!</h6>
+                        </div>
+                      )}
                       onClick={() => this.toggleEditMode(true)}
                       size={32}
+                      text="Edit"
                       title="edit this template!"
                       type="writing"
                     />
                     <IconButton
                       className={styles.editButton}
+                      hint={(
+                        <div>
+                          <h6>Delete this template :(</h6>
+                        </div>
+                      )}
                       onClick={() => this.handleDelete()}
                       size={32}
+                      text="Delete"
                       title="Delete this template"
                       type="garbage"
                     />
@@ -293,12 +306,12 @@ class TemplatePage extends Component {
                   className={styles.editButton}
                   hint={(
                     <div>
-                      <h6>Favorite this template!</h6>
-                      <p>Add this template to your favorites.</p>
+                      <h6>Add this template to your favorites.</h6>
                     </div>
                   )}
                   onClick={e => this.toggleFavorite(e)}
                   size={32}
+                  text="Fave"
                   title="favorite this list!"
                   type={this.props.isFavorite ? 'heart' : 'heart-gray'}
                 />
@@ -306,12 +319,12 @@ class TemplatePage extends Component {
                   className={styles.editButton}
                   hint={(
                     <div>
-                      <h6>Copy this template!</h6>
-                      <p>Duplicate this template and make it your own.</p>
+                      <h6>Duplicate this template and make it your own.</h6>
                     </div>
                   )}
                   onClick={() => this.handleCopy()}
                   size={32}
+                  text="Clone"
                   title="copy this template!"
                   type="layer"
                 />
@@ -326,12 +339,12 @@ class TemplatePage extends Component {
                   className={styles.editButton}
                   hint={(
                     <div>
-                      <h6>Export this template!</h6>
-                      <p>Send this template to Trello.</p>
+                      <h6>Send this template to Trello.</h6>
                     </div>
                   )}
                   onClick={() => this.handleExport()}
                   size={32}
+                  text="Export"
                   title="export this template!"
                   type="send"
                 />

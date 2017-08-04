@@ -1,9 +1,21 @@
 @import ../../styles/Variables.sass
 $left-padding: 120px
 
+.background
+  background-image: url(images/graphics/pets.svg)
+  background-position: top center
+  background-size: 150px auto
+  height: 300%
+  left: -100%
+  position: absolute
+  top: -100%
+  transform: rotate(25deg)
+  width: 300%
+  z-index: -1
+
 .buttons
   float: right
-  padding: 25px
+  padding: 53px 25px 0px 25px
 
   button
     margin-left: 20px
@@ -25,10 +37,9 @@ $left-padding: 120px
   width: 1px
 
 .template
-  // background-image: url(images/template-bg.svg)
-  // background-size: cover
-  background-color: #f5efe9
+  overflow: hidden
   padding: 50px
+  position: relative
 
   h2
     padding: 60px 0 5px $left-padding
