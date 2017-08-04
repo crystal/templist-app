@@ -100,8 +100,8 @@ class HomePage extends React.Component {
           side="left"
           title="Stop Tossing Your To-Do Lists!"
           message="We write, discard and rewrite to-do lists for the recurring events in life (air travel, road trips, hosting houseguests, etc). Even with so much list-making experience, our to-do lists never ever get any better. We're tossing our to-do lists aside instead of refining and reusing them - which leads to forgotten tasks and ineffective lists."
-          buttonText="Learn More"
-          buttonUrl="about"
+          buttonText="Get Started"
+          buttonUrl="browse"
           graphic="todo"
         />
         <Banner
@@ -110,7 +110,7 @@ class HomePage extends React.Component {
           side="right"
           title="How It Works"
           message="With TempLists, simply select a to-do list template you need. Then, you can edit it to make it your own (add, delete or edit the tasks) - and save your version for future use. Your lists are sure to get better each time, and so will all your adventures."
-          buttonText="Get Started"
+          buttonText="Browse Templates"
           buttonUrl="browse"
           graphic="how"
         />
@@ -121,7 +121,7 @@ class HomePage extends React.Component {
           title="Export to Trello"
           message="Export your lists to Trello in one click!"
           buttonText="Get Started"
-          buttonUrl="about"
+          buttonUrl="browse"
           graphic="taco"
         />
         <Banner

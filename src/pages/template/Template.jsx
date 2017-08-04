@@ -23,6 +23,7 @@ class TemplatePage extends Component {
     this.state = {
       auth: false,
       editMode: false,
+      graphic: '',
       isLoading: true,
       isNew: false,
       isSubmitting: false,
@@ -41,10 +42,15 @@ class TemplatePage extends Component {
       this.props.selectMenuItem('newTemplate');
       this.toggleEditMode(true);
       this.setState({
+        graphic: 'lists',
         isNew: true
       });
       return;
     }
+    this.setState({
+      graphic: location.pathname.split('/')[2],
+      isNew: true
+    });
     this.props.selectMenuItem('');
     this.loadTemplate();
   }
@@ -253,7 +259,12 @@ class TemplatePage extends Component {
     }
     return (
       <div className={styles.template}>
-        <div className={styles.background} />
+        <div
+          className={styles.background}
+          style={{
+            backgroundImage: `url(images/graphics/${this.state.graphic}.svg)`
+          }}
+        />
         <section>
           <div className={styles.buttons}>
             {this.state.editMode && (
@@ -324,7 +335,7 @@ class TemplatePage extends Component {
                   )}
                   onClick={() => this.handleCopy()}
                   size={32}
-                  text="Clone"
+                  text="Copy"
                   title="copy this template!"
                   type="layer"
                 />
