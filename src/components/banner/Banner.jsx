@@ -16,21 +16,21 @@ class Banner extends React.Component {
           backgroundColor: this.props.bgColor
         }}
       >
-        <section
-          style={{
-            backgroundImage: `url(images/graphics/${this.props.graphic}.svg)`,
-            backgroundPosition: `center ${this.props.side === 'left' ? 'right' : 'left'}`
-          }}
-        >
+        <section>
           <div
-            className={styles.info}
-            style={{
-              float: this.props.side
-            }}
+            className={classNames(styles.info, styles[this.props.side])}
           >
             <h2 style={{ color: this.props.fgColor }}>
               {this.props.title}
             </h2>
+            <div
+              className={styles.image}
+              style={{
+                backgroundImage: `url(images/graphics/${this.props.graphic}.svg)`,
+                left: this.props.side === 'right' ? 0 : 'auto',
+                right: this.props.side === 'left' ? 0 : 'auto'
+              }}
+            />
             <p style={{ color: this.props.fgColor }}>{this.props.message}</p>
             <Link
               className={styles.button}
@@ -43,11 +43,6 @@ class Banner extends React.Component {
             >
               {this.props.buttonText}
             </Link>
-          </div>
-          <div
-            className={styles.image}
-          >
-
           </div>
         </section>
       </div>

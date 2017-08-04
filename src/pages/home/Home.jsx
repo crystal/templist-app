@@ -88,9 +88,9 @@ class HomePage extends React.Component {
       <div className={styles.home}>
         <div className={styles.featured}>
           <section>
-            <Link to="templates/flight-trip">
+            <Link to="featured">
               <h1>To-Do List Templates</h1>
-              <h2>for <span className={styles.trello}>Trello</span></h2>
+              <h2><span>for </span><span className={styles.trello}>Trello</span></h2>
             </Link>
           </section>
         </div>
