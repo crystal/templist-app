@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 
 import selectMenuItem from '../../actions/selectMenuItem';
 
+import Banner from '../../components/banner/Banner';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -88,11 +89,51 @@ class HomePage extends React.Component {
         <div className={styles.featured}>
           <section>
             <Link to="templates/flight-trip">
-              <h2>To-Do List Templates</h2>
-              <h3>for any occassion.</h3>
+              <h1>To-Do List Templates</h1>
+              <h2>for Trello</h2>
             </Link>
           </section>
         </div>
+        <Banner
+          bgColor="#e8f7fa"
+          fgColor="#5aa0c4"
+          side="left"
+          title="Stop Tossing Away Your To-Do Lists!"
+          message="Nunc a ornare tellus, nec cursus elit. Cras posuere volutpat eros vitae pellentesque. Mauris eros nisi, vestibulum nec scelerisque vitae, rutrum ac magna. Sed pellentesque molestie nunc scelerisque accumsan. Nam consectetur fermentum ipsum sed rhoncus. Vestibulum vitae ante vitae sem ornare posuere. In consequat et massa et ornare."
+          buttonText="Learn More"
+          buttonUrl="about"
+          graphic="todo"
+        />
+        <Banner
+          bgColor="#fb8a20"
+          fgColor="#fffef9"
+          side="right"
+          title="How It Works"
+          message="Nunc a ornare tellus, nec cursus elit. Cras posuere volutpat eros vitae pellentesque. Mauris eros nisi, vestibulum nec scelerisque vitae, rutrum ac magna. Sed pellentesque molestie nunc scelerisque accumsan. Nam consectetur fermentum ipsum sed rhoncus. Vestibulum vitae ante vitae sem ornare posuere. In consequat et massa et ornare."
+          buttonText="Get Started"
+          buttonUrl="browse"
+          graphic="how"
+        />
+        <Banner
+          bgColor="#e8f7fa"
+          fgColor="#5aa0c4"
+          side="left"
+          title="Export to Trello"
+          message="Nunc a ornare tellus, nec cursus elit. Cras posuere volutpat eros vitae pellentesque. Mauris eros nisi, vestibulum nec scelerisque vitae, rutrum ac magna. Sed pellentesque molestie nunc scelerisque accumsan. Nam consectetur fermentum ipsum sed rhoncus. Vestibulum vitae ante vitae sem ornare posuere. In consequat et massa et ornare."
+          buttonText="Get Started"
+          buttonUrl="about"
+          graphic="taco"
+        />
+        <Banner
+          bgColor="#fb8a20"
+          fgColor="#fffef9"
+          side="right"
+          title="The Perfect Template for Your Next List"
+          message="Nunc a ornare tellus, nec cursus elit. Cras posuere volutpat eros vitae pellentesque. Mauris eros nisi, vestibulum nec scelerisque vitae, rutrum ac magna. Sed pellentesque molestie nunc scelerisque accumsan. Nam consectetur fermentum ipsum sed rhoncus. Vestibulum vitae ante vitae sem ornare posuere. In consequat et massa et ornare."
+          buttonText="Browse Templates"
+          buttonUrl="browse"
+          graphic="templates"
+        />
         <div className={styles.top}>
           <section>
             <h2>Popular Templates</h2>
