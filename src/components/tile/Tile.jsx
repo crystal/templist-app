@@ -40,7 +40,7 @@ class Tile extends Component {
       );
     }
     const dummyItems = [];
-    for (let i = this.props.items.length; i < 7; i += 1) {
+    for (let i = this.props.items.length; i < this.props.maxItems + 1; i += 1) {
       dummyItems.push('');
     }
     return (
@@ -81,6 +81,7 @@ Tile.defaultProps = {
   isLoading: false,
   items: [],
   listFavorites: () => {},
+  maxItems: 6,
   id: '',
   title: '',
   uid: '',
@@ -94,6 +95,7 @@ Tile.propTypes = {
   items: [],
   id: PropTypes.string,
   listFavorites: PropTypes.func,
+  maxItems: PropTypes.number,
   title: PropTypes.string,
   uid: PropTypes.string,
   url: PropTypes.string

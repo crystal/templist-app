@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import selectMenuItem from '../../actions/selectMenuItem';
 
 import Banner from '../../components/banner/Banner';
+import FeaturedTile from '../../components/featured-title/FeaturedTile';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
@@ -90,7 +91,7 @@ class HomePage extends React.Component {
           <section>
             <Link to="templates/flight-trip">
               <h1>To-Do List Templates</h1>
-              <h2>for Trello</h2>
+              <h2>for <span className={styles.trello}>Trello</span></h2>
             </Link>
           </section>
         </div>
@@ -134,6 +135,27 @@ class HomePage extends React.Component {
           buttonUrl="browse"
           graphic="templates"
         />
+        {/* <div className={styles.top}>
+          <section>
+            <h2>Featured Templates</h2>
+            <Tiles>
+              {this.state.tiles.map((tile) => {
+                return (
+                  <FeaturedTile
+                    id={tile.key}
+                    key={tile.key}
+                    isFavorite={this.props.favorites.includes(tile.key)}
+                    title={tile.title}
+                    description={tile.description}
+                    url={`templates/${tile.key}`}
+                    items={tile.items}
+                    graphic="pet"
+                  />
+                );
+              })}
+            </Tiles>
+          </section>
+        </div> */}
         <div className={styles.top}>
           <section>
             <h2>Popular Templates</h2>
@@ -148,6 +170,7 @@ class HomePage extends React.Component {
                     description={tile.description}
                     url={`templates/${tile.key}`}
                     items={tile.items}
+                    maxItems={3}
                   />
                 );
               })}

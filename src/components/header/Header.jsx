@@ -54,14 +54,6 @@ class Header extends React.Component {
                   Browse
                 </Link>
               </li>
-              <li>
-                <Link
-                  className={classNames(styles.link, this.props.selectedMenuItem === 'about' ? styles.selected : null)}
-                  to="about"
-                >
-                  About
-                </Link>
-              </li>
             </ul>
             {this.props.email && (
               <ul className={styles.account}>
