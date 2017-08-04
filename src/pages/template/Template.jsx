@@ -79,7 +79,7 @@ class TemplatePage extends Component {
 
     Trello.authorize({
       type: 'popup',
-      name: 'Getting Started Application',
+      name: 'TempLists',
       scope: {
         read: 'true',
         write: 'true' },
