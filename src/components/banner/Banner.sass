@@ -1,0 +1,74 @@
+@import ../../styles/Variables.sass
+
+$width: 450px
+
+.banner
+  background-color: #e8f7fa
+  padding: 40px
+
+  h2
+    color: #4e8fb9
+    font-family: Oswald
+    font-size: 48px
+    text-transform: uppercase
+    width: $width
+
+  p
+    color: #4e8fb9
+    margin: 0 0 20px 0
+    text-align: justify
+    width: $width
+
+  section
+    position: relative
+
+.button
+  border: 3px #4e8fb9 solid
+  color: #4e8fb9
+  font-family: Oswald
+  font-size: 24px
+  font-weight: bold
+  padding: 10px 30px
+  text-align: center
+  text-transform: uppercase
+
+.image
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: contain
+  height: 100%
+  position: absolute
+  top: 0
+  width: 50%
+
+.info
+  &.left
+    float: left
+
+  &.right
+    float: right
+
+@media screen and (max-width: $mobile-width)
+  .banner
+    padding: 10px
+
+    h2
+      font-size: 24px
+      text-align: center
+      width: 100%
+
+    p
+      width: 100%
+
+  .button
+    width: 100%
+
+  .image
+    height: 250px
+    margin: 0 0 25px 0
+    position: static
+    width: 100%
+
+  .info
+    &.left, .right
+      float: none

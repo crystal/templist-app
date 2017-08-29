@@ -3,6 +3,10 @@
 .account
   float: right
 
+.accountMenu
+  display: none
+  float: right
+
 .header
   background-color: #000
   background-image: url(images/header-bg.svg)
@@ -17,6 +21,8 @@
 
   button
     font-size: 12px
+    margin: 0
+    padding: 0
 
   h1
     display: inline-block
@@ -45,15 +51,35 @@
 
 .link
   color: #FFF
-  text-transform: uppercase
+  // text-transform: uppercase
+  text-align: right
+
 
   &:hover
     color: lightblue
+
+  &.selected
+    color: #fb8a20
 
 .headerLogo
   margin: 0 auto
   text-align: center
   width: 120px
 
+.mainMenu
+  display: none
+  float: left
+
 .menu
   float: left
+
+@media screen and (max-width: $mobile-width)
+  .account, .menu
+    display: none
+
+  .accountMenu, .mainMenu
+    display: block
+
+  .header
+    button
+      margin: 0 15px

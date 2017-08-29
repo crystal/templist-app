@@ -39,6 +39,10 @@ class Tile extends Component {
         </li>
       );
     }
+    const dummyItems = [];
+    for (let i = this.props.items.length; i < this.props.maxItems + 1; i += 1) {
+      dummyItems.push('');
+    }
     return (
       <li className={styles.tile}>
         <Link to={this.props.url}>
@@ -57,9 +61,9 @@ class Tile extends Component {
               {this.props.description}
             </p>
             <ul className={styles.items}>
-              {this.props.items.slice(0, 7).map((item) => {
+              {this.props.items.slice(0, 7).concat(dummyItems).map((item) => {
                 return (
-                  <li title={item}>{item}</li>
+                  <li title={item}>{item || (<span>&nbsp;</span>)}</li>
                 );
               })}
             </ul>
@@ -77,6 +81,7 @@ Tile.defaultProps = {
   isLoading: false,
   items: [],
   listFavorites: () => {},
+  maxItems: 6,
   id: '',
   title: '',
   uid: '',
@@ -90,6 +95,7 @@ Tile.propTypes = {
   items: [],
   id: PropTypes.string,
   listFavorites: PropTypes.func,
+  maxItems: PropTypes.number,
   title: PropTypes.string,
   uid: PropTypes.string,
   url: PropTypes.string

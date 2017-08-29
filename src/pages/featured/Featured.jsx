@@ -6,13 +6,12 @@ import { Link } from 'react-router';
 
 import selectMenuItem from '../../actions/selectMenuItem';
 
-import Banner from '../../components/banner/Banner';
 import Tile from '../../components/tile/Tile';
 import Tiles from '../../components/tiles/Tiles';
 
-import styles from './Home.sass';
+import styles from './Featured.sass';
 
-class HomePage extends React.Component {
+class FeaturedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,59 +80,20 @@ class HomePage extends React.Component {
     };
   }
   componentWillMount() {
-    this.props.selectMenuItem('home');
+    this.props.selectMenuItem('featured');
   }
   render() {
     return (
       <div className={styles.home}>
         <div className={styles.featured}>
           <section>
-            <Link to="featured">
-              <h1>To-Do List Templates</h1>
-              <h2><span>for </span><span className={styles.trello}>Trello</span></h2>
+            <Link to="templates/flight-trip">
+              <h3>Most Popular!</h3>
+              <h2>Flight Trip</h2>
+              <p>The air travel checklist.</p>
             </Link>
           </section>
         </div>
-        <Banner
-          bgColor="#e8f7fa"
-          fgColor="#5aa0c4"
-          side="left"
-          title="Stop Tossing Your To-Do Lists!"
-          message="We write, discard and rewrite to-do lists for the recurring events in life (air travel, road trips, hosting houseguests, etc). Even with so much list-making experience, our to-do lists never ever get any better. We're tossing our to-do lists aside instead of refining and reusing them - which leads to forgotten tasks and ineffective lists."
-          buttonText="Get Started"
-          buttonUrl="browse"
-          graphic="todo"
-        />
-        <Banner
-          bgColor="#fb8a20"
-          fgColor="#fffef9"
-          side="right"
-          title="How It Works"
-          message="With TempLists, simply select a to-do list template you need. Then, you can edit it to make it your own (add, delete or edit the tasks) - and save your version for future use. Your lists are sure to get better each time, and so will all your adventures."
-          buttonText="Browse Templates"
-          buttonUrl="browse"
-          graphic="how"
-        />
-        <Banner
-          bgColor="#e8f7fa"
-          fgColor="#5aa0c4"
-          side="left"
-          title="Export to Trello"
-          message="Export your lists to Trello in one click!"
-          buttonText="Get Started"
-          buttonUrl="browse"
-          graphic="taco"
-        />
-        <Banner
-          bgColor="#fb8a20"
-          fgColor="#fffef9"
-          side="right"
-          title="The Perfect Template for Any Occassion"
-          message="Find to-do list templates for everything from 'Taking a Roap Trip' to 'Hosting House Guests' or create your own templates for future use."
-          buttonText="Browse Templates"
-          buttonUrl="browse"
-          graphic="templates"
-        />
         <div className={styles.top}>
           <section>
             <h2>Popular Templates</h2>
@@ -148,7 +108,6 @@ class HomePage extends React.Component {
                     description={tile.description}
                     url={`templates/${tile.key}`}
                     items={tile.items}
-                    maxItems={3}
                   />
                 );
               })}
@@ -160,12 +119,12 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.defaultProps = {
+FeaturedPage.defaultProps = {
   favorites: [],
   selectMenuItem: () => {}
 };
 
-HomePage.propTypes = {
+FeaturedPage.propTypes = {
   favorites: PropTypes.array,
   selectMenuItem: PropTypes.func
 };
@@ -184,4 +143,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(FeaturedPage);

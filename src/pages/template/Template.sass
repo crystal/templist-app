@@ -1,9 +1,21 @@
 @import ../../styles/Variables.sass
 $left-padding: 120px
 
+.background
+  background-color: $light-blue
+  background-position: top center
+  background-size: 150px auto
+  height: 300%
+  left: -100%
+  position: absolute
+  top: -100%
+  transform: rotate(25deg)
+  width: 300%
+  z-index: -1
+
 .buttons
   float: right
-  padding: 25px
+  padding: 53px 25px 0px 25px
 
   button
     margin-left: 20px
@@ -25,10 +37,9 @@ $left-padding: 120px
   width: 1px
 
 .template
-  // background-image: url(images/template-bg.svg)
-  // background-size: cover
-  background-color: #f5efe9
+  overflow: hidden
   padding: 50px
+  position: relative
 
   h2
     padding: 60px 0 5px $left-padding
@@ -65,3 +76,31 @@ $left-padding: 120px
     box-shadow: $shadow
     padding: 0
     position: relative
+
+
+@media screen and (max-width: $mobile-width)
+  .buttons
+    background-color: #FFF
+    border-top: 1px #CCC solid
+    bottom: 0
+    left: 0
+    padding: 15px
+    position: fixed
+    text-align: center
+    width: 100%
+
+  .margin
+    display: none
+
+  .template
+    button
+      margin: 0 5px
+
+    h2
+      padding: 60px 20px 5px 20px
+
+    li
+      padding: 20px
+
+    p
+      padding: 0 20px 20px 20px

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import autologin from '../../actions/autologin';
 
 import Header from '../../components/header/Header';
+import Hint from '../../components/hint/Hint';
 import Footer from '../../components/footer/Footer';
 import Modal from '../../components/modal/Modal';
 
@@ -24,6 +25,11 @@ class MainTemplate extends React.Component {
         {this.props.currentModal && (
           <Modal />
         )}
+        {this.props.currentHint && (
+          <Hint target={this.props.currentHintTarget}>
+            {this.props.currentHint}
+          </Hint>
+        )}
       </div>
     );
   }
@@ -32,17 +38,31 @@ class MainTemplate extends React.Component {
 MainTemplate.defaultProps = {
   autologin: () => {},
   children: {},
+  currentHint: '',
+  currentHintTarget: '',
   currentModal: ''
 };
 
 MainTemplate.propTypes = {
   autologin: PropTypes.func,
   children: PropTypes.object,
+  currentHint: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.string
+  ]),
+  currentHintTarget: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.string
+  ]),
   currentModal: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
+    currentHint: state.hint.currentHint,
+    currentHintTarget: state.hint.target,
     currentModal: state.modal.currentModal
   };
 }

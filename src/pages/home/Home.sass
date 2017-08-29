@@ -2,7 +2,7 @@
 
 .featured
   background-color: $light-blue
-  background-image: url(images/plane.svg)
+  // background-image: url(images/plane.svg)
   background-position: top 220px left 10px
   background-size: auto 400px
   background-repeat: no-repeat
@@ -11,12 +11,19 @@
   a
     color: #FFF
     display: block
-    padding: 60px 0 240px 0
+    padding: 60px 0 40px 0
     height: 100%
+
+  h1
+    font-family: Oswald
+    font-size: 172px
+    letter-spacing: 15px
+    line-height: 180px
+    text-transform: uppercase
 
   h2
     color: #FFF
-    font-size: 50px
+    font-size: 80px
 
   h3
     color: #f6820c
@@ -25,8 +32,33 @@
   section
     padding: 0
 
+  span
+    vertical-align: middle
+
 .top
   text-align: center
 
   h2
     padding: 0 0 40px 0
+
+.trello
+  background-image: url(images/logos/trello.svg)
+  background-repeat: no-repeat
+  background-size: contain
+  color: transparent
+  display: inline-block
+  height: 100px
+  margin: 0 0 0 10px
+  width: 300px
+
+@media screen and (max-width: $mobile-width)
+  .featured
+    a
+      padding: 100px 0 80px 0
+
+    h1
+      font-size: 48px
+      line-height: 70px
+
+    h2
+      font-size: 24px

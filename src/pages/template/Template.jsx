@@ -7,8 +7,8 @@ import { push } from 'react-router-redux';
 import getTemplate from '../../actions/getTemplate';
 import listFavorites from '../../actions/listFavorites';
 import resetTemplate from '../../actions/resetTemplate';
+import selectMenuItem from '../../actions/selectMenuItem';
 import showModal from '../../actions/showModal';
-
 
 import Button from '../../components/button/Button';
 import Loader from '../../components/loader/Loader';
@@ -23,18 +23,35 @@ class TemplatePage extends Component {
     this.state = {
       auth: false,
       editMode: false,
+      graphic: '',
       isLoading: true,
+      isNew: false,
       isSubmitting: false,
 
       author: '',
       description: '',
       key: '',
       newTitle: '',
+      newValue: '',
       items: [],
       title: ''
     };
   }
   componentWillMount() {
+    if (location.pathname === '/my/templates/new') {
+      this.props.selectMenuItem('newTemplate');
+      this.toggleEditMode(true);
+      this.setState({
+        graphic: 'lists',
+        isNew: true
+      });
+      return;
+    }
+    this.setState({
+      graphic: location.pathname.split('/')[2],
+      isNew: true
+    });
+    this.props.selectMenuItem('');
     this.loadTemplate();
   }
   componentWillUpdate(nextProps) {
@@ -62,7 +79,7 @@ class TemplatePage extends Component {
 
     Trello.authorize({
       type: 'popup',
-      name: 'Getting Started Application',
+      name: 'TempLists',
       scope: {
         read: 'true',
         write: 'true' },
@@ -97,6 +114,20 @@ class TemplatePage extends Component {
 
     this.setState({
       items
+    });
+  }
+  handleNewInput({ target: { value } }) {
+    this.setState({
+      newValue: value
+    });
+  }
+  handleNewSubmit() {
+    const items = this.state.items;
+    items.push(this.state.newValue);
+    console.log(items);
+    this.setState({
+      items,
+      newValue: ''
     });
   }
   toggleEditMode(enabled) {
@@ -136,8 +167,26 @@ class TemplatePage extends Component {
     });
   }
   handleSave() {
+    console.log('save 1');
     if (!this.props.isLoggedIn) {
       this.props.showModal('login');
+      return;
+    }
+    const templateObject = {
+      author: this.props.uid,
+      description: this.state.description || this.props.templateDescription,
+      items: this.state.items || this.props.templateItems,
+      title: this.state.title || this.props.templateTitle
+    };
+    console.log(templateObject);
+    if (this.state.isNew) {
+      firebase.database()
+        .ref('/templates')
+        .push(templateObject)
+        .then(function getSnapshot(snapshot) {
+          const newKey = snapshot.key;
+          location.href = `/templates/${newKey}`;
+        });
       return;
     }
     firebase.database()
@@ -210,6 +259,12 @@ class TemplatePage extends Component {
     }
     return (
       <div className={styles.template}>
+        <div
+          className={styles.background}
+          style={{
+            backgroundImage: `url(images/graphics/${this.state.graphic}.svg)`
+          }}
+        />
         <section>
           <div className={styles.buttons}>
             {this.state.editMode && (
@@ -232,15 +287,27 @@ class TemplatePage extends Component {
                   <span>
                     <IconButton
                       className={styles.editButton}
+                      hint={(
+                        <div>
+                          <h6>Edit this template!</h6>
+                        </div>
+                      )}
                       onClick={() => this.toggleEditMode(true)}
                       size={32}
+                      text="Edit"
                       title="edit this template!"
                       type="writing"
                     />
                     <IconButton
                       className={styles.editButton}
+                      hint={(
+                        <div>
+                          <h6>Delete this template :(</h6>
+                        </div>
+                      )}
                       onClick={() => this.handleDelete()}
                       size={32}
+                      text="Delete"
                       title="Delete this template"
                       type="garbage"
                     />
@@ -248,15 +315,27 @@ class TemplatePage extends Component {
                 )}
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Add this template to your favorites.</h6>
+                    </div>
+                  )}
                   onClick={e => this.toggleFavorite(e)}
                   size={32}
+                  text="Fave"
                   title="favorite this list!"
                   type={this.props.isFavorite ? 'heart' : 'heart-gray'}
                 />
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Duplicate this template and make it your own.</h6>
+                    </div>
+                  )}
                   onClick={() => this.handleCopy()}
                   size={32}
+                  text="Copy"
                   title="copy this template!"
                   type="layer"
                 />
@@ -269,8 +348,14 @@ class TemplatePage extends Component {
                 /> */}
                 <IconButton
                   className={styles.editButton}
+                  hint={(
+                    <div>
+                      <h6>Send this template to Trello.</h6>
+                    </div>
+                  )}
                   onClick={() => this.handleExport()}
                   size={32}
+                  text="Export"
                   title="export this template!"
                   type="send"
                 />
@@ -282,6 +367,7 @@ class TemplatePage extends Component {
               <input
                 name="title"
                 onChange={e => this.handleInput(e)}
+                placeholder="Add a Title"
                 value={this.state.title || this.props.templateTitle}
               />
             )}
@@ -294,6 +380,7 @@ class TemplatePage extends Component {
               <input
                 name="description"
                 onChange={e => this.handleInput(e)}
+                placeholder="Add a Description"
                 value={this.state.description || this.props.templateDescription}
               />
             )}
@@ -316,7 +403,7 @@ class TemplatePage extends Component {
                       <IconButton
                         className={styles.deleteButton}
                         onClick={() => this.handleDeleteItem(index)}
-                        size="24"
+                        size={24}
                         type="remove"
                       />
                     </div>
@@ -327,6 +414,22 @@ class TemplatePage extends Component {
                 </li>
               );
             })}
+            {this.state.editMode && (
+              <li>
+                <input
+                  onChange={e => this.handleNewInput(e)}
+                  placeholder="Add an item to this list..."
+                  type="text"
+                  value={this.state.newValue}
+                />
+                <IconButton
+                  className={styles.deleteButton}
+                  onClick={() => this.handleNewSubmit()}
+                  size={24}
+                  type="add"
+                />
+              </li>
+            )}
           </ul>
           <div className={styles.margin} />
         </section>
@@ -350,6 +453,7 @@ TemplatePage.defaultProps = {
   push: () => {},
   resetTemplate: () => {},
   router: {},
+  selectMenuItem: () => {},
   showModal: () => {},
   templateAuthor: '',
   templateDescription: '',
@@ -374,6 +478,7 @@ TemplatePage.propTypes = {
   push: PropTypes.func,
   resetTemplate: PropTypes.func,
   router: PropTypes.object,
+  selectMenuItem: PropTypes.func,
   showModal: PropTypes.func,
   templateAuthor: PropTypes.string,
   templateDescription: PropTypes.string,
@@ -416,6 +521,9 @@ function mapDispatchToProps(dispatch) {
     },
     resetTemplate: () => {
       dispatch(resetTemplate());
+    },
+    selectMenuItem: (selected) => {
+      dispatch(selectMenuItem(selected));
     },
     showModal: (currentModal, data) => {
       dispatch(showModal(currentModal, data));

@@ -12,6 +12,7 @@ import MainTemplate from './templates/main/Main';
 
 import AboutPage from './pages/about/About';
 import BrowsePage from './pages/browse/Browse';
+import FeaturedPage from './pages/featured/Featured';
 import HomePage from './pages/home/Home';
 import MyFavoritesPage from './pages/my-favorites/MyFavorites';
 import MyTemplatesPage from './pages/my-templates/MyTemplates';
@@ -20,6 +21,8 @@ import TemplatePage from './pages/template/Template';
 import copyReducer from './reducers/copy';
 import deleteTemplateReducer from './reducers/deleteTemplate';
 import exportReducer from './reducers/export';
+import hintReducer from './reducers/hint';
+import menuReducer from './reducers/menu';
 import modalReducer from './reducers/modal';
 import templateReducer from './reducers/template';
 import userReducer from './reducers/user';
@@ -42,6 +45,8 @@ const store = createStore(
     copy: copyReducer,
     deleteTemplate: deleteTemplateReducer,
     export: exportReducer,
+    hint: hintReducer,
+    menu: menuReducer,
     modal: modalReducer,
     routing: routerReducer,
     template: templateReducer,
@@ -69,8 +74,10 @@ render(
         <IndexRoute component={HomePage} />
         <Route path="about" component={AboutPage} />
         <Route path="browse" component={BrowsePage} />
+        <Route path="featured" component={FeaturedPage} />
         <Route path="my/favorites" component={MyFavoritesPage} />
         <Route path="my/templates" component={MyTemplatesPage} />
+        <Route path="my/templates/new" component={TemplatePage} />
         <Route path="templates/:listType" component={TemplatePage} />
       </Route>
     </Router>
