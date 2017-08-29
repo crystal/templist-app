@@ -16,7 +16,7 @@ const config = {
   },
   production: {
     baseHref: '/',
-    outputPath: 'docs'
+    outputPath: 'build'
   }
 };
 const { baseHref, outputPath } = config[env];
@@ -86,7 +86,7 @@ module.exports = {
     }
   },
   // two plugins we're using. one copies images, html & css
-  // from the src directory to the docs folder
+  // from the src directory to the build folder
   plugins,
   module: {
     // this loader uses babel to transpile our JS code

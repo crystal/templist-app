@@ -88,7 +88,7 @@ npm start
 npm run build
 ```
 
-### Build for Production (./docs)
+### Build for Production (./build)
 
 ```
 # inside docker container
