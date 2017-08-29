@@ -17,6 +17,7 @@ deploy:
   skip_cleanup: true
   local_dir: build
   cache_control: "max-age=21600"
+  acl: public_read
 after_deploy:
   - aws configure set preview.cloudfront true
   - aws cloudfront create-invalidation --distribution-id $TEMPLISTS_AWS_DISTRIBUTION --paths "/*"
