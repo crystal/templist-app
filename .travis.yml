@@ -5,6 +5,7 @@ cache: pip
 install:
   - pip install awscli
 script:
+  - npm install
   - npm run build-production
 deploy:
   on:
