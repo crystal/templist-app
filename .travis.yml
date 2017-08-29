@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - '6'
+cache: pip
+install:
+  - pip install awscli
+script:
+  - npm run build-production
+deploy:
+  on:
+    branch: master
+  provider: s3
+  access_key_id: $TEMPLISTS_AWS_KEY
+  secret_access_key: $TEMPLISTS_AWS_SECRET
+  bucket: $TEMPLISTS_AWS_BUCKET
+  skip_cleanup: true
+  local_dir: build
+  cache_control: "max-age=21600"
+after_deploy:
+  - aws configure set preview.cloudfront true
+  - aws cloudfront create-invalidation --distribution-id $TEMPLISTS_AWS_DISTRIBUTION --paths "/*"

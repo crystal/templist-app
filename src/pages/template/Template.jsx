@@ -213,8 +213,11 @@ class TemplatePage extends Component {
   loadTemplate() {
     this.props.getTemplate(this.props.router.params.listType, this.props.uid);
   }
-  toggleFavorite(e) {
-    e.preventDefault();
+  toggleFavorite() {
+    if (!this.props.isLoggedIn) {
+      this.props.showModal('login');
+      return;
+    }
     firebase.database()
       .ref(`/users/${this.props.uid}/favorites`)
       .once('value')
@@ -320,7 +323,7 @@ class TemplatePage extends Component {
                       <h6>Add this template to your favorites.</h6>
                     </div>
                   )}
-                  onClick={e => this.toggleFavorite(e)}
+                  onClick={() => this.toggleFavorite()}
                   size={32}
                   text="Fave"
                   title="favorite this list!"

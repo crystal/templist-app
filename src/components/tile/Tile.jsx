@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+import showModal from '../../actions/showModal';
+
 import IconButton from '../icon-button/IconButton';
 
 import listFavorites from '../../actions/listFavorites';
@@ -13,6 +15,10 @@ import styles from './Tile.sass';
 class Tile extends Component {
   toggleFavorite(e) {
     e.preventDefault();
+    if (!this.props.isLoggedIn) {
+      this.props.showModal('login');
+      return;
+    }
     firebase.database()
       .ref(`/users/${this.props.uid}/favorites`)
       .once('value')
@@ -80,9 +86,11 @@ Tile.defaultProps = {
   isFavorite: false,
   isLoading: false,
   items: [],
+  isLoggedIn: false,
   listFavorites: () => {},
   maxItems: 6,
   id: '',
+  showModal: () => {},
   title: '',
   uid: '',
   url: ''
@@ -92,10 +100,12 @@ Tile.propTypes = {
   description: PropTypes.string,
   isLoading: PropTypes.bool,
   isFavorite: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   items: [],
   id: PropTypes.string,
   listFavorites: PropTypes.func,
   maxItems: PropTypes.number,
+  showModal: PropTypes.func,
   title: PropTypes.string,
   uid: PropTypes.string,
   url: PropTypes.string
@@ -104,7 +114,8 @@ Tile.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    uid: state.user.uid
+    uid: state.user.uid,
+    isLoggedIn: state.user.isLoggedIn
   };
 }
 
@@ -112,6 +123,9 @@ function mapDispatchToProps(dispatch) {
   return {
     listFavorites: (uid) => {
       dispatch(listFavorites(uid));
+    },
+    showModal: (currentModal, data) => {
+      dispatch(showModal(currentModal, data));
     }
   };
 }
